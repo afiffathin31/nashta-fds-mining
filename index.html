@@ -14,7 +14,7 @@
   <!-- Chart.js 4 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   
-  <link rel="stylesheet" href="styles.css?v=20260821_2">
+  <link rel="stylesheet" href="styles.css?v=20260821_chartfix">
 </head>
 <body>
 
@@ -1452,8 +1452,7 @@
                     <p>Deteksi transaksi yang diinput pada tengah malam (22:00 s/d 04:00 WIB) saat pengawasan minim.</p>
                   </div>
                 </div>
-                <div style="height: 280px;">
-                  <canvas id="chart-fin-offhours"></canvas>
+                <div class="chart-container" style="position: relative; width: 100%; height: 260px;"><canvas id="chart-fin-offhours"></canvas>
                 </div>
               </div>
 
@@ -1643,8 +1642,7 @@
                     <p>Pemetaan kontraktor hauling dan trading berdasarkan probabilitas risiko fraud.</p>
                   </div>
                 </div>
-                <div style="height: 280px;">
-                  <canvas id="chart-proc-scatter"></canvas>
+                <div class="chart-container" style="position: relative; width: 100%; height: 260px;"><canvas id="chart-proc-scatter"></canvas>
                 </div>
               </div>
 
@@ -2704,8 +2702,7 @@
                   <p>Perbandingan total kasus terdeteksi vs dana yang berhasil di-hold.</p>
                 </div>
               </div>
-              <div style="height: 280px;">
-                <canvas id="chart-exec-recovery"></canvas>
+              <div class="chart-container" style="position: relative; width: 100%; height: 260px;"><canvas id="chart-exec-recovery"></canvas>
               </div>
             </div>
 
@@ -2716,8 +2713,7 @@
                   <p>Tingkat probabilitas anomali berdasarkan lokasi operasional.</p>
                 </div>
               </div>
-              <div style="height: 280px;">
-                <canvas id="chart-exec-regional"></canvas>
+              <div class="chart-container" style="position: relative; width: 100%; height: 260px;"><canvas id="chart-exec-regional"></canvas>
               </div>
             </div>
           </div>
@@ -3093,6 +3089,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20260821_2"></script>
+  <script src="app.js?v=20260821_chartfix"></script>
 </body>
 </html>
