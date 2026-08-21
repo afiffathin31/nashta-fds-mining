@@ -1,3 +1,4 @@
+window.chartInstances = {}; const chartInstances = window.chartInstances;
 // =========================================================================
 // NASHTA FDS - COAL MINING & CASH MANAGEMENT FORENSICS EDITION
 // DATASET: C:\Users\Apip\Downloads\dummy.xlsx (Dataset Bersih Bank Mandiri 1000001)
@@ -950,7 +951,7 @@ function initAllCharts() {
   // 1. Off-Hours Journal Line Chart
   const ctxOff = document.getElementById('chart-fin-offhours');
   if (ctxOff) {
-    new Chart(ctxOff, {
+    chartInstances['chart-fin-offhours'] = new Chart(ctxOff, {
       type: 'line',
       data: {
         labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:45'],
@@ -966,7 +967,7 @@ function initAllCharts() {
   // 2. Vendor Scatter Plot
   const ctxScatter = document.getElementById('chart-proc-scatter');
   if (ctxScatter) {
-    new Chart(ctxScatter, {
+    chartInstances['chart-proc-scatter'] = new Chart(ctxScatter, {
       type: 'scatter',
       data: {
         datasets: [
@@ -1004,7 +1005,7 @@ function initAllCharts() {
   // 7a. Executive Recovery Line
   const ctxExecRec = document.getElementById('chart-exec-recovery');
   if (ctxExecRec) {
-    new Chart(ctxExecRec, {
+    chartInstances['chart-exec-recovery'] = new Chart(ctxExecRec, {
       type: 'line',
       data: {
         labels: ['Jan 04', 'Jan 05 (Double TF)', 'Jan 08', 'Jan 09', 'Jan 10 (Restitusi)', 'Jan 11 (Pinjaman 5M)'],
@@ -1020,7 +1021,7 @@ function initAllCharts() {
   // 7b. Regional Risk Heatmap Bar
   const ctxExecReg = document.getElementById('chart-exec-regional');
   if (ctxExecReg) {
-    new Chart(ctxExecReg, {
+    chartInstances['chart-exec-regional'] = new Chart(ctxExecReg, {
       type: 'bar',
       data: {
         labels: ['Stockpile ISP Titan Km 107', 'Pit Tambang Kalibata', 'Hauling IPD Alam4 PT. MAS', 'Stockpile Pelangi Ninja', 'Franco Baturaja KDM'],
@@ -1101,7 +1102,19 @@ function initNavigation() {
       } else {
         document.body.classList.toggle('sidebar-collapsed');
       }
-      window.dispatchEvent(new Event('resize'));
+      
+  // Trigger instant Chart.js resize for mobile viewports
+  setTimeout(() => {
+    if (window.chartInstances) {
+      Object.values(window.chartInstances).forEach(chart => {
+        if (chart && typeof chart.resize === 'function') {
+          chart.resize();
+        }
+      });
+    }
+    window.dispatchEvent(new Event('resize'));
+  }, 60);
+
     });
   }
 
@@ -1191,7 +1204,19 @@ function switchView(viewName, subViewName) {
     breadcrumb.textContent = getModuleTitle(viewName, sub);
   }
 
-  window.dispatchEvent(new Event('resize'));
+  
+  // Trigger instant Chart.js resize for mobile viewports
+  setTimeout(() => {
+    if (window.chartInstances) {
+      Object.values(window.chartInstances).forEach(chart => {
+        if (chart && typeof chart.resize === 'function') {
+          chart.resize();
+        }
+      });
+    }
+    window.dispatchEvent(new Event('resize'));
+  }, 60);
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
