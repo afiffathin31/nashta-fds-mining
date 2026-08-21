@@ -1,0 +1,3090 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NashTa FDS - Coal Mining & Cash Forensics Edition</title>
+  
+  <!-- Inter Font & FontAwesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- Chart.js 4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="app-layout">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar-container" id="sidebar">
+      
+      <!-- Brand Header -->
+      <div class="sidebar-brand">
+        <div class="brand-logo-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="brand-text">
+          <h2>NashTa FDS <span class="version-tag">Mining Edition</span></h2>
+          <p>Coal & Cash Forensic Overlay</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        
+        <div class="nav-section-title">Forensik Operasional Tambang</div>
+
+        <!-- 1. Buku Kas & Bank Mandiri -->
+        <div class="nav-group open" id="group-financial">
+          <button class="nav-group-header" data-group="financial">
+            <span class="group-title"><i class="fa-solid fa-wallet text-danger"></i> 1. Buku Kas & Mandiri</span>
+            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          </button>
+          <div class="nav-sub-items" id="sub-financial">
+            <a href="#" class="sub-item active" data-view="financial" data-sub="gl">Semua Transaksi (68 Tx)</a>
+            <a href="#" class="sub-item" data-view="financial" data-sub="rules">8 Aturan Forensik (Notes)</a>
+            <a href="#" class="sub-item" data-view="financial" data-sub="offhours">Jurnal Malam (23:40)</a>
+            <a href="#" class="sub-item" data-view="financial" data-sub="round">Anomali Angka Bulat</a>
+            <a href="#" class="sub-item" data-view="financial" data-sub="suspense">Suspense Pinjaman (PT. AADC)</a>
+          </div>
+        </div>
+
+        <!-- 2. Kontraktor & Vendor Hauling -->
+        <div class="nav-group" id="group-procurement">
+          <button class="nav-group-header" data-group="procurement">
+            <span class="group-title"><i class="fa-solid fa-truck-front text-warning"></i> 2. Vendor & Hauling</span>
+            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          </button>
+          <div class="nav-sub-items" id="sub-procurement">
+            <a href="#" class="sub-item" data-view="procurement" data-sub="matrix">Matriks Risiko Kontraktor</a>
+            <a href="#" class="sub-item" data-view="procurement" data-sub="ocr">OCR Invoice & Checksum</a>
+            <a href="#" class="sub-item" data-view="procurement" data-sub="profile360">Vendor 360° Profile</a>
+            <a href="#" class="sub-item" data-view="procurement" data-sub="related">Benturan Rekening Staf</a>
+            <a href="#" class="sub-item" data-view="procurement" data-sub="tender">Kolusi IP Tender Lelang</a>
+          </div>
+        </div>
+
+        <!-- 3. Pajak & Ekualisasi DJP -->
+        <div class="nav-group" id="group-tax">
+          <button class="nav-group-header" data-group="tax">
+            <span class="group-title"><i class="fa-solid fa-scale-balanced text-success"></i> 3. Pajak & DJP Sync</span>
+            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          </button>
+          <div class="nav-sub-items" id="sub-tax">
+            <a href="#" class="sub-item" data-view="tax" data-sub="equalization">3-Way Equalization (GL-SPT)</a>
+            <a href="#" class="sub-item" data-view="tax" data-sub="pph22">PPh 22 Batubara (014/BOU)</a>
+            <a href="#" class="sub-item" data-view="tax" data-sub="pph23">PPh 23 Sewa & Jasa</a>
+            <a href="#" class="sub-item" data-view="tax" data-sub="restitusi">Restitusi PPh Badan Rp 4.9M</a>
+          </div>
+        </div>
+
+        <!-- 4. Kontrol Internal & SoD -->
+        <div class="nav-group" id="group-approvals">
+          <button class="nav-group-header" data-group="approvals">
+            <span class="group-title"><i class="fa-solid fa-key text-info"></i> 4. Otorisasi & SoD</span>
+            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          </button>
+          <div class="nav-sub-items" id="sub-approvals">
+            <a href="#" class="sub-item" data-view="approvals" data-sub="sod_matrix">Matriks Pemisahan Wewenang</a>
+            <a href="#" class="sub-item" data-view="approvals" data-sub="toxic">Pelanggaran Hak Akses AP</a>
+            <a href="#" class="sub-item" data-view="approvals" data-sub="override">Override Pinjaman Rp 5M</a>
+            <a href="#" class="sub-item" data-view="approvals" data-sub="rubber">Rubber Stamping Approvals</a>
+          </div>
+        </div>
+
+        <!-- 5. Timbangan & Logistik Tambang -->
+        <div class="nav-group" id="group-operational">
+          <button class="nav-group-header" data-group="operational">
+            <span class="group-title"><i class="fa-solid fa-boxes-stacked text-purple"></i> 5. Timbangan & Stockpile</span>
+            <i class="fa-solid fa-chevron-right chevron-icon"></i>
+          </button>
+          <div class="nav-sub-items" id="sub-operational">
+            <a href="#" class="sub-item" data-view="operational" data-sub="timbangan">Jembatan Timbang Km 107</a>
+            <a href="#" class="sub-item" data-view="operational" data-sub="phantom">Phantom Hauling (GPS)</a>
+            <a href="#" class="sub-item" data-view="operational" data-sub="stockpile">Susut Stock ROM Titan</a>
+            <a href="#" class="sub-item" data-view="operational" data-sub="void">Reject Batubara High Ash</a>
+          </div>
+        </div>
+
+        <div class="nav-section-title">Investigasi & Manajemen Kasus</div>
+
+        <!-- 6. Case Management Queue -->
+        <button class="nav-btn" data-view="case_mgmt">
+          <i class="fa-solid fa-briefcase"></i> 6. Antrean Kasus Triase
+        </button>
+
+        <!-- 7. Executive Dashboard (POJK 12/2024) -->
+        <button class="nav-btn" data-view="executive">
+          <i class="fa-solid fa-chart-line"></i> 7. Executive POJK 12/2024
+        </button>
+
+        <!-- 8. Dossier Workspace (AL-2024-001) -->
+        <button class="nav-btn" data-view="investigation_detail">
+          <i class="fa-solid fa-folder-open text-danger"></i> 8. Dossier Workspace (AL-001)
+        </button>
+
+        <!-- 9. Digital Evidence Vault -->
+        <button class="nav-btn" data-view="evidence_mgmt">
+          <i class="fa-solid fa-vault text-warning"></i> 9. Digital Evidence Vault
+        </button>
+
+        <!-- 10. User Access & RBAC -->
+        <button class="nav-btn" data-view="user_access">
+          <i class="fa-solid fa-user-shield text-info"></i> 10. User Access & RBAC
+        </button>
+      </nav>
+
+      <!-- Sidebar User Profile -->
+      <div class="sidebar-user-footer">
+        <div class="user-avatar">BS</div>
+        <div class="user-info">
+          <span class="user-name">Budi Santoso, CFE</span>
+          <span class="user-role">Lead Forensic Auditor</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-wrapper">
+      
+      <!-- Top Navigation Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon" id="sidebar-toggle" title="Toggle Sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="topbar-breadcrumb">
+            <span class="breadcrumb-root">FDS Mining Edition</span>
+            <i class="fa-solid fa-chevron-right separator"></i>
+            <span class="breadcrumb-current" id="current-breadcrumb">1. Buku Kas & Bank Mandiri Forensics</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="global-search-input" placeholder="Cari Voucher, PT. MAS, PT. AADC, PT. Perkasa...">
+          </div>
+
+          <div class="topbar-badge" title="Koneksi Gateway DJP Aktif">
+            <span class="status-dot pulse-green"></span>
+            <span>JendelaTax H2H</span>
+          </div>
+
+          <div class="user-pill">
+            <div class="user-avatar-sm">BS</div>
+            <div class="user-pill-text">
+              <strong>Budi Santoso, CFE</strong>
+              <small>Investigator Tambang</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW PANELS CONTAINER -->
+      <main class="content-body">
+        
+        <!-- =========================================================================
+             MODULE 1: BUKU KAS & BANK MANDIRI (1000001)
+             ========================================================================= -->
+        <section class="view-panel active" id="view-financial">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-wallet text-danger"></i> Buku Kas & Rekening Bank Mandiri Forensics (Akun 1000001)</h1>
+              <p>Menganalisis 68 transaksi riil Buku Kas Bank Mandiri (dummy.xlsx), mendeteksi Double Transfer Jasa Hauling PT. MAS (Rp 980 Juta), aliran dana pinjaman sementara PT. AADC (Rp 7.415 Miliar), benturan kepentingan PT. Perkasa Kuat Sejahtera, dan audit fisik pengadaan mesin underspek (Voucher 030/BOU).</p>
+            </div>
+          </div>
+
+          <!-- Subnav Tabs -->
+          <div class="module-subnav-bar" id="subnav-financial">
+            <button class="subnav-tab-btn active" data-sub="gl"><i class="fa-solid fa-list-check"></i> Semua Transaksi (68 Tx)</button>
+            <button class="subnav-tab-btn" data-sub="rules"><i class="fa-solid fa-clipboard-check"></i> 8 Aturan Forensik (Notes)</button>
+            <button class="subnav-tab-btn" data-sub="offhours"><i class="fa-solid fa-moon"></i> Jurnal Malam (23:40)</button>
+            <button class="subnav-tab-btn" data-sub="round"><i class="fa-solid fa-coins"></i> Anomali Angka Bulat</button>
+            <button class="subnav-tab-btn" data-sub="suspense"><i class="fa-solid fa-hand-holding-dollar"></i> Suspense Pinjaman (PT. AADC)</button>
+          </div>
+
+          <!-- SUB-VIEW 1.1: SEMUA TRANSAKSI -->
+          <div class="sub-view-pane active" id="fin-sub-gl">
+            
+            <div class="kpi-grid">
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon blue"><i class="fa-solid fa-receipt"></i></div>
+                  <span class="kpi-trend neutral">Mandiri 1000001</span>
+                </div>
+                <div class="kpi-value font-mono">68 Tx</div>
+                <div class="kpi-label">Total Transaksi Buku Kas</div>
+                <div class="kpi-footer-note">Periode Operasional Januari 20x8</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                  <span class="kpi-trend up-red">Critical</span>
+                </div>
+                <div class="kpi-value font-mono">Rp 980 Jt</div>
+                <div class="kpi-label">Double Transfer PT. MAS</div>
+                <div class="kpi-footer-note">Voucher 001/BIN/I/20x8 (Hauling 2006 MT)</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon orange"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                  <span class="kpi-trend up-red">Suspense</span>
+                </div>
+                <div class="kpi-value font-mono">Rp 7.41 M</div>
+                <div class="kpi-label">Pinjaman Sementara PT. AADC</div>
+                <div class="kpi-footer-note">Arus dana masuk & keluar tanpa BAP Direksi</div>
+              </div>
+
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon green"><i class="fa-solid fa-building-columns"></i></div>
+                  <span class="kpi-trend up-green">Restitusi DJP</span>
+                </div>
+                <div class="kpi-value font-mono">Rp 4.90 M</div>
+                <div class="kpi-label">Restitusi PPh Badan (016/BOU)</div>
+                <div class="kpi-footer-note">Klaim Lebih Bayar Terverifikasi DJP</div>
+              </div>
+            </div>
+
+            <!-- Table: Clean Transactions -->
+            <div class="content-card">
+              <div class="content-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-table-list text-danger"></i> Rekap 68 Transaksi Bersih Buku Kas Bank Mandiri (Akun 1000001)</h3>
+                  <p>Dataset bersih transaksi keuangan pertambangan batubara dari dummy.xlsx.</p>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                  <button class="btn btn-secondary btn-xs" onclick="renderBankMandiriTable('', 'all')">Semua (68)</button>
+                  <button class="btn btn-outline-danger btn-xs" onclick="renderBankMandiriTable('', 'danger')"><i class="fa-solid fa-flag"></i> Anomali Kritis</button>
+                  <button class="btn btn-outline-warning btn-xs" onclick="renderBankMandiriTable('', 'warning')"><i class="fa-solid fa-triangle-exclamation"></i> Suspense</button>
+                </div>
+              </div>
+
+              <div class="table-responsive" style="max-height: 520px; overflow-y: auto;">
+                <table class="data-table" id="table-fin-gl-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 45px;">No</th>
+                      <th style="width: 100px;">Tanggal</th>
+                      <th style="width: 140px;">Sumber & Voucher</th>
+                      <th>Uraian Transaksi Batubara & Rekening</th>
+                      <th class="text-right" style="width: 130px;">Debit (Kas Masuk)</th>
+                      <th class="text-right" style="width: 130px;">Kredit (Kas Keluar)</th>
+                      <th class="text-right" style="width: 130px;">Saldo Kas Mandiri</th>
+                      <th style="width: 160px;">Flag Sistem FDS</th>
+                      <th class="text-right" style="width: 90px;">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">1</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">001/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya OperaLLKonal</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 600.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 257.000.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #1 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">2</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">003/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Admin</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 250.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 7.000.000</span></td>
+        <td><span class="badge-tag orange">HIGH: Biaya Admin Tidak Wajar Rp 250 Jt</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">3</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">003/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Final uncrushed coal 410,460 MT @ 320.000 dari stock ROM PT. NInja ke Stockpile ISP Titan Km 107 - F-183/INV/TG-TAN2/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 146.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -139.000.000</span></td>
+        <td><span class="badge-tag green">OPS: Stock ROM Stockpile Titan Km 107</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #3 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">4</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">002/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Admin</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 2.500.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -141.500.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #4 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">5</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">002/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Stockopname  - 003/PO/JJJ-SCF/XII/2023 - PI 20040123000697</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 215.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -356.500.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #5 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">6</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">004/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Iuran BPJS Kesehatan HO Bulan Jan 2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 1.200.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -357.700.000</span></td>
+        <td><span class="badge-tag green">HR AUDIT: Iuran BPJS</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #6 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">7</td>
+        <td class="font-mono" style="white-space: nowrap;">04 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">005/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(Koperasi IBL) Jasa transportasi angkutan batubara dari Kalibata Ke stockpile PT. MAS 452,17 MT jarak 24,4 km  @ 1.600 - 007/INV/KKK-JJJ/XII/23</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 19.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -376.700.000</span></td>
+        <td><span class="badge-tag green">OPS: Jasa Hauling Batubara</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #7 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">8</td>
+        <td class="font-mono" style="white-space: nowrap;">05 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">007/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Jasa Transportir Coal Hauling to IPD Alam4 PT. Mas 60 MT Jarak58,1 km @ 1.200 - 09/INT/JJJ/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 2.500.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp -379.200.000</span></td>
+        <td><span class="badge-tag green">OPS: Jasa Hauling Batubara</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #8 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">9</td>
+        <td class="font-mono" style="white-space: nowrap;">05 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">001/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>DOUBLE TF -  Jasa transportir coal hauling to IPD Alam4 PT. MAS 2.006,03 MT jarak 25,1 km @ 1.600  periode tagihan 28 Nov sd 10 Desember 2023 - 07/INT-JJJ/XII/2023</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 980.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 600.800.000</span></td>
+        <td><span class="badge-tag red">CRITICAL: Double Transfer Rp 980 Jt (001/BIN)</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">10</td>
+        <td class="font-mono" style="white-space: nowrap;">05 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">006/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Iuran Bpjs ketenagakerjaan periode Januari 2024 (gaji desember 2023) HO</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 5.100.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 595.700.000</span></td>
+        <td><span class="badge-tag orange">HR AUDIT: Gaji GL Rp 112 Jt vs HRD Rp 80 Jt (Selisih Rp 32 Jt)</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">11</td>
+        <td class="font-mono" style="white-space: nowrap;">08 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">008/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Reimbursement royalti LLK No. 150/LLK/JJJ-Kalibata/I/2024 8.700 MT - 004/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 49.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 546.700.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">12</td>
+        <td class="font-mono" style="white-space: nowrap;">08 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">010/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pinjaman Sementara (Royalti Provisi Batubara 5% PT. Kalibata 8.700 MT) LLK 148/LLK/JJJ-Kalibata/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 70.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 476.700.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">13</td>
+        <td class="font-mono" style="white-space: nowrap;">08 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">009/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Trafficman dan pemberLLKhan jalan aspal desa manggul periode 1-30 Desember 2023 - 006-SRQ-ENG-KDM-0124</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 6.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 470.700.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #13 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">14</td>
+        <td class="font-mono" style="white-space: nowrap;">08 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">002/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pinjaman Sementara - PT. AADC</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 700.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 1.170.700.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">15</td>
+        <td class="font-mono" style="white-space: nowrap;">09 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">003/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pinjaman Sementara  - PT. AADC</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 715.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 1.885.700.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">16</td>
+        <td class="font-mono" style="white-space: nowrap;">09 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">011/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pinjaman Sementara (Royalti ProviLLKonal Batubara 8% PT. Kalibata 8.700 MT) LLK 523</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 500.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 1.385.700.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">17</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">014/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pph 22 Masa Des 2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 510.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 875.700.000</span></td>
+        <td><span class="badge-tag green">TAX: Setoran PPh 22 Batubara Rp 510 Juta</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #17 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">18</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">005/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Penerimaan pendapatan atas final jasa pengangkutan batubara 11,58 MT @75.000 Inv No. 219/INV/JJJ-KDM-28F/XII/2023</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 4.300.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 880.000.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #18 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">19</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">006/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Penerimaan pendapatan atas final jasa pengangkutan batubara 27,99 MT @75.000 Inv No. 218/INV/JJJ-KDM-27F/XII/2023</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 7.800.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 887.800.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #19 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">20</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">007/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Penerimaan pendapatan atas final jasa pengangkutan batubara 1,01 MT @75.000 Inv No. 217/INV/JJJ-KDM-25F/XII/2023</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 830.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 888.630.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #20 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">21</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">004/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Jon Coal) Penerimaan pendapatan atas final penjualan batubara 1,01 MT @375.000  Inv No. 220/INV/JJJ-JJJ-1F/XII/2023</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 140.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 888.770.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #21 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">22</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">016/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan restitusi PPh Badan</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 4.900.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.788.770.000</span></td>
+        <td><span class="badge-tag green">TAX: Restitusi PPh Badan Rp 4.9 Miliar</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #22 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">23</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">012/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pph 23 rental masa des 2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 26.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.762.770.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #23 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">24</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">013/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pph 23 service masa des 2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 230.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.762.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #24 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">25</td>
+        <td class="font-mono" style="white-space: nowrap;">10 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">015/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pph 4 (2) Masa Des 2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 1.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.761.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #25 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">26</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">025/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Pahala Kehidupan) Jasa angkutan KDM- MAS 985 MT @ 40.160 periode 18-26 Des 2023 - 001/INV/DT/ESA-JJJ/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 59.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.702.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #26 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">27</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">022/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Final pembelian batubara 1.01 MT @ 345.000 tujuan franco baturaja - F 047/KDM/INV/XI/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 6.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.696.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #27 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">28</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">017/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Reimbursement royalti LLK No. 151/LLK/JJJ-Kalibata/I/2024 8.700 MT - 005/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 6.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 5.690.540.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">29</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">008/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pinjaman Sementara - PT. AADC</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 5.000.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.690.540.000</span></td>
+        <td><span class="badge-tag red">HIGH: Pinjaman Sementara Rp 5.0 Miliar (PT. AADC)</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">30</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">018/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Pelangi Dimatamu) Reimbursement royalti LLK 123 JJJ 1.x00 MT - 100/NInja/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 52.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.638.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #30 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">31</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">019/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Pelangi Dimatamu) Reimbursement royalti LLK 144 - 092/NInja/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 222.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.416.540.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #31 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">32</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">021/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Final pembelian batubara 27,99 MT @ 325.000 tujuan franco ulak pandan - F 049/KDM/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 22.400.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.394.140.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #32 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">33</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">020/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Final pembelian batubara 11,58 MT @ 305.000 tujuan franco stocpile PT. MAS - F 050/KDM/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 17.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.377.140.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #33 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">34</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">023/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Reimbursement royalti Final LLK 324 5.015,46 - 053/KDM/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 7.900.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.369.240.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #34 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">35</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">024/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Reimbursement royalti TI 124 JJJ 1.000 MT - 051/KDM/INV/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 34.040.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.335.200.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #35 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">36</td>
+        <td class="font-mono" style="white-space: nowrap;">11 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">026 A/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Admin TF ke PT. AAA</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 500.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.334.700.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #36 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">37</td>
+        <td class="font-mono" style="white-space: nowrap;">12 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">009/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Jon Coal) Penerimaan atas Penjualan Batubara FOT 1.000 MT @375.000 Inv No. 002/INV/JJJ-JJJ-1/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 410.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.744.700.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #37 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">38</td>
+        <td class="font-mono" style="white-space: nowrap;">12 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">009 A/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Kelebihan terima atas Penjualan Batubara FOT Inv No. 002/INV/JJJ-JJJ-1/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 3.800.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.748.500.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #38 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">39</td>
+        <td class="font-mono" style="white-space: nowrap;">12 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">026/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Merdana Indi) Final Jasa angkutan batubara 524 MT jarak 24,4 km @ 1.600 periode 14 des - 26 Des 2023 - 17/INV-FINAL/AAA/XII/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 21.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.727.500.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #39 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">40</td>
+        <td class="font-mono" style="white-space: nowrap;">15 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">027/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Pelangi Dimatamu) Final pembelian batubara 0,13 MT @ 345.000 Tujuan Franco PT Semen Baturaja - F 048/NInja/INV/IX/2023</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 400.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.727.100.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #40 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">41</td>
+        <td class="font-mono" style="white-space: nowrap;">15 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">010/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan atas Pinjaman Sementara (Royalti ProviLLKonal Batubara 8% PT. Kalibata 8.700 MT) LLK 148/LLK/JJJ-Kalibata/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 685.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.412.100.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">42</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">011 A/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Kelebihan terima atas final penjualan batubara 27,99 MT @320.000  Inv No. 001/INV/JJJ-SMJ-10F/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 200.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.412.300.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #42 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">43</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">011/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas) Penerimaan pendapatan atas final penjualan batubara 27,99 MT @320.000  Inv No. 001/INV/JJJ--SMJ-10F/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 15.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.427.300.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #43 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">44</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">028/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Pembayaran Royalti LLK No. 153/LLK/JJJ-KDM/I/2024 - 001/KDM/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 154.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.273.300.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #44 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">45</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">029/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Pembayaran Royalti LLK No. 152/LLK/JJJ-Kalibata/I/2024 - 007/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 342.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.931.300.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">46</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">030/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pembelian mesin  ABC 1unit</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 1.554.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 9.377.300.000</span></td>
+        <td><span class="badge-tag red">ASSET AUDIT: Pengadaan Mesin ABC Rp 1.55 M (Underspek)</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">47</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">012/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan atas Pinjaman Sementara (Royalti ProviLLKonal Batubara 8% PT. Kalibata 8.700 MT) LLK 523</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 742.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.119.300.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">48</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">031/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pembayaran Sewa Kost 2 Bln 17 Jan s.d 16 Mar 2024 a/n Bintang Lemon - 00005/FPD/HRD-HO/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 3.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.116.300.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #48 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">49</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">032/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Admin</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 20.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.116.280.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #49 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">50</td>
+        <td class="font-mono" style="white-space: nowrap;">16 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">032/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>CloLLKng Stock inventory cargo JJJ dan Legal Certificate Surveyor Independent Tah</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 45.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.071.280.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #50 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">51</td>
+        <td class="font-mono" style="white-space: nowrap;">18 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">014/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan atas Pinjaman Sementara  LLK 124</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 54.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.125.280.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">52</td>
+        <td class="font-mono" style="white-space: nowrap;">18 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">015/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan atas Pinjaman Sementara (Royalti Provisional Batubara 15% PT. NInja 1.500 MT) LLK 123</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 56.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.181.280.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">53</td>
+        <td class="font-mono" style="white-space: nowrap;">18 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">013/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Penerimaan atas Pinjaman Sementara (Royalti Provisional Batubara 1% PT. KDM 8.300 MT) LLK 399</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 850.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.031.280.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">54</td>
+        <td class="font-mono" style="white-space: nowrap;">22 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">033/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Pembelian Batubara 1.000 MT @380.000 Tujuan Franco Baturaja - 003/KDM/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 582.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.449.280.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #54 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">55</td>
+        <td class="font-mono" style="white-space: nowrap;">22 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">033/-/BOU/I/20x8.</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Lebih Bayar atas Pembelian Batubara 1.000 MT @380.000 Tujuan Franco Baturaja - 003/KDM/INV/I/2024 - PT. KDM</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 3.850.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.445.430.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #55 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">56</td>
+        <td class="font-mono" style="white-space: nowrap;">26 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">016/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Sugih Kaya Sugih Sentosa) Penerimaan atas Final Penjualan Batubara FCA Merapi Inv No 003 s.d 008 Jan 2024 BMSS</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 2.238.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 12.683.430.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #56 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">57</td>
+        <td class="font-mono" style="white-space: nowrap;">26 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">034/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pengembalian Pinjaman Sementara</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 2.500.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.183.430.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">58</td>
+        <td class="font-mono" style="white-space: nowrap;">29 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Penerimaan Penjualan</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">017/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Sugih Kaya Sugih Sentosa) Penerimaan atas Penjualan Batubara FCA Merapi 7.500 MT @456.400 Inv No. 010/INV/JJJ-BMSS-1/I/2024</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 3.748.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 13.931.430.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #58 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">59</td>
+        <td class="font-mono" style="white-space: nowrap;">30 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">035/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Gaji Bulan Jan 2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 112.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 13.819.430.000</span></td>
+        <td><span class="badge-tag orange">HR AUDIT: Gaji GL Rp 112 Jt vs HRD Rp 80 Jt (Selisih Rp 32 Jt)</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">60</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">040/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Kuda Mas Paint) Pembelian Batubara >>  Tujuan Franco Merapi IPD MAS - 004/KDM/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 2.614.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.205.430.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #60 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">61</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">042/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>rounding</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 7.400.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.198.030.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #61 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">62</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">042/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Biaya Admin Bln Jan dan Pajak</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 350.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 10.848.030.000</span></td>
+        <td><span class="badge-tag orange">HIGH: Biaya Admin Tidak Wajar Rp 250 Jt</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">63</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">018/-/BIN/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Bunga Bank Bln Jan</strong></td>
+        <td class="text-right"><span class="font-mono font-bold text-success">Rp 800.000.000</span></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.648.030.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #63 valid.')">Audit</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">64</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">041/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pelunasan Pinjaman Sementara  (2.450.000.000-2.000.000.000=450.000.000)</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 50.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.598.030.000</span></td>
+        <td><span class="badge-tag orange">WARNING: Pinjaman Sementara Tanpa BAP</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">65</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">036/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Pembayaran Royalti LLK No 3/LLK/JJJ-Kalibata/I/2024 - 003/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 48.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.550.030.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">66</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">037/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Reimbursment royalti LLK No. 7/LLK/JJJ-Kalibata/XII/2023 - 101F/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 13.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.537.030.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="bg-danger-light">
+        <td class="font-mono" style="color: #64748b;">67</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Pembayaran Pembelian</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">038/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>(PT. Perkasa Kuat Sejahtera) Reimbursment royalti LLK No.5R/LLK/JJJ-Kalibata/XI/2023 - 096F/Kalibata/INV/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 10.000.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.527.030.000</span></td>
+        <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Dirut</span></td>
+        <td class="text-right"><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+      </tr>
+    
+      <tr class="">
+        <td class="font-mono" style="color: #64748b;">68</td>
+        <td class="font-mono" style="white-space: nowrap;">31 Jan 20x8</td>
+        <td>
+          <span class="badge-tag blue" style="font-size: 0.68rem; margin-bottom: 2px;">Bukti Jurnal</span><br>
+          <span class="font-mono font-bold" style="font-size: 0.76rem;">039/-/BOU/I/20x8</span>
+        </td>
+        <td style="font-size: 0.8rem; line-height: 1.4;"><strong>Pengembalian kelebihan pembayaran Inv No. 002/INV/JJJ-JJJ-1/I/2024 - 001/CN/JJJ-JJJ/I/2024</strong></td>
+        <td class="text-right">-</td>
+        <td class="text-right"><span class="font-mono font-bold text-danger">Rp 3.700.000</span></td>
+        <td class="text-right"><span class="font-mono font-bold">Rp 11.523.330.000</span></td>
+        <td><span class="badge-tag green">Normal</span></td>
+        <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi baris #68 valid.')">Audit</button></td>
+      </tr>
+    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SUB-VIEW 1.2: 8 AUDIT RULES / AUDITOR NOTES -->
+          <div class="sub-view-pane" id="fin-sub-rules">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-clipboard-check text-danger"></i> 8 Aturan Forensik & Kriteria Audit (Auditor Notes dari dummy.xlsx)</h3>
+                  <p>Instruksi khusus dan kriteria pengujian kepatuhan yang dicantumkan pada file dummy.xlsx untuk mengaudit Buku Kas Mandiri.</p>
+                </div>
+              </div>
+              <div style="margin-top: 14px;">
+                
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score red">RULE-01</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Benturan Kepentingan (Conflict of Interest) Direktur Utama</strong>
+          </div>
+          <span class="badge-tag red">CRITICAL</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">PT. Perkasa Kuat Sejahtera adalah perusahaan pribadi Direktur Utama. Wajib diawasi ketat dan di-highlight pada setiap voucher pembayaran royalti (Voucher 036, 037, 038/BOU).</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Voucher 036/BOU, 037/BOU, 038/BOU, 004/Kalibata</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score orange">RULE-02</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Transfer Kas di Luar Hari Kerja / Jam Kerja (Off-Hours & Weekend)</strong>
+          </div>
+          <span class="badge-tag orange">HIGH</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Deteksi transaksi transfer kas pada hari libur atau malam hari (22:00 - 04:00) yang tidak melalui prosedur operasional standar.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Voucher 001/BIN (Double TF Pkl 23:40), 008/BIN (Pkl 01:15)</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score orange">RULE-03</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Pengawasan Kata Kunci 'Pinjaman Sementara' (Suspense Account 1199001)</strong>
+          </div>
+          <span class="badge-tag orange">HIGH</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Semua pengeluaran atau penerimaan berlabel pinjaman sementara tanpa BAP Direksi wajib di-flag dan ditelusuri pelunasannya.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">PT. AADC Rp 5.0 Miliar, Royalti Kalibata Rp 500 Juta, PT. PDI</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score red">RULE-04</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Pengadaan Mesin & Aset Tetap > Rp 550 Juta Wajib Pembiayaan Syariah</strong>
+          </div>
+          <span class="badge-tag red">CRITICAL</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Pengeluaran pembelian mesin di atas Rp 550 Juta wajib diverifikasi ke Asset Register dan uji fisik spesifikasi teknis di lapangan.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Voucher 030/BOU (Mesin ABC Rp 1.554 Miliar - Temuan Audit: Underspek, Beda Merk)</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score blue">RULE-05</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Validasi Sumber Mutasi Bank (Haram Bukti Jurnal Umum, Wajib BIN/BOU)</strong>
+          </div>
+          <span class="badge-tag blue">MEDIUM</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Seluruh mutasi rekening kas/bank harus menggunakan bukti Bank In (BIN) atau Bank Out (BOU), bukan Bukti Jurnal (JV) umum.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Rekening Bank Mandiri 1000001</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score orange">RULE-06</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Rekonsiliasi Gaji & BPJS HRD vs GL</strong>
+          </div>
+          <span class="badge-tag orange">HIGH</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Data gaji GL pada Voucher 035/BOU tercatat Rp 112 Juta vs Data Riil HRD = Rp 80 Juta (Selisih Gaji Fiktif Rp 32 Juta). BPJS HRD = 2.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Voucher 035/BOU (Gaji Jan 2024)</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score red">RULE-07</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Fisik Register Aset & Fraud Spesifikasi Mesin (Underspecification)</strong>
+          </div>
+          <span class="badge-tag red">CRITICAL</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Audit fisik mesin nomor aset Abc 11 (Voucher 030/BOU Rp 1.554 M) menunjukkan mesin yang datang tidak sesuai spesifikasi kontrak (beda merk).</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Register Aset Baris 120-121 dummy.xlsx</strong>
+        </div>
+      </div>
+    
+      <div style="background-color: #ffffff; border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge-score blue">RULE-08</span>
+            <strong style="font-size: 0.88rem; color: #0f172a;">Ekualisasi Restitusi PPh Badan Rp 4.9 Miliar (016/BOU)</strong>
+          </div>
+          <span class="badge-tag blue">MEDIUM</span>
+        </div>
+        <p style="font-size: 0.78rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">Estimasi PPh Badan Overpaid Rp 5.0 Miliar vs Realisasi Penerimaan Kas Mandiri Rp 4.9 Miliar + 99 JV Rp 100 Juta.</p>
+        <div style="font-size: 0.72rem; color: #64748b; background-color: #f8fafc; padding: 6px 10px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;">
+          <i class="fa-solid fa-magnifying-glass text-danger"></i> Ditemukan Pada: <strong style="color: #0f172a;">Voucher 016/BOU & Jurnal 99 JV</strong>
+        </div>
+      </div>
+    
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 1.3: OFF-HOURS JOURNAL -->
+          <div class="sub-view-pane" id="fin-sub-offhours">
+            <div class="grid-2col">
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-clock text-danger"></i> Distribusi Waktu Entri Jurnal (Normal vs Off-Hours)</h3>
+                    <p>Deteksi transaksi yang diinput pada tengah malam (22:00 s/d 04:00 WIB) saat pengawasan minim.</p>
+                  </div>
+                </div>
+                <div style="height: 280px;">
+                  <canvas id="chart-fin-offhours"></canvas>
+                </div>
+              </div>
+
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-moon text-danger"></i> Log Jurnal Malam Hari Mencurigakan</h3>
+                    <p>Transaksi kas besar yang diinput pada jam tidur oleh staf internal.</p>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="data-table" id="table-fin-offhours-table">
+                    <thead>
+                      <tr>
+                        <th>Waktu Entri</th>
+                        <th>No Voucher</th>
+                        <th>Akun Buku Besar</th>
+                        <th>Uraian Transaksi Tambang</th>
+                        <th class="text-right">Nominal</th>
+                        <th>User</th>
+                        <th>Evaluasi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="font-mono text-danger font-bold">05 Jan 20x8 23:40</td>
+                        <td class="font-mono">001/-/BIN/I/20x8</td>
+                        <td>1000001 - Bank Mandiri</td>
+                        <td style="font-size: 0.78rem;"><strong>DOUBLE TF - Jasa hauling IPD Alam4 PT. MAS 2.006 MT</strong></td>
+                        <td class="text-right font-mono font-bold text-success">Rp 980.000.000 (Dr)</td>
+                        <td><span class="badge-tag blue">Rudi Hartono</span></td>
+                        <td><span class="badge-tag red">Double TF</span></td>
+                      </tr>
+                      <tr>
+                        <td class="font-mono text-danger font-bold">11 Jan 20x8 01:15</td>
+                        <td class="font-mono">008/-/BIN/I/20x8</td>
+                        <td>1199001 - Pinjaman Sementara</td>
+                        <td style="font-size: 0.78rem;"><strong>Pinjaman Sementara - PT. AADC (Dana Bulat)</strong></td>
+                        <td class="text-right font-mono font-bold text-success">Rp 5.000.000.000 (Dr)</td>
+                        <td><span class="badge-tag blue">Bambang Irawan</span></td>
+                        <td><span class="badge-tag red">Dana Talangan</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 1.4: ROUND NUMBER BIAS -->
+          <div class="sub-view-pane" id="fin-sub-round">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-coins text-warning"></i> Analisis Deviasi Angka Bulat (Benford & Round Number Bias)</h3>
+                  <p>Transaksi non-operasional bernilai nominal bulat tanpa desimal kalkulasi tarif tonase.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>No Voucher</th>
+                      <th>Tanggal</th>
+                      <th>Akun GL</th>
+                      <th>Uraian Transaksi</th>
+                      <th class="text-right">Nominal Bulat</th>
+                      <th>Karakteristik Deviasi</th>
+                      <th>Tindakan Forensik</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">008/-/BIN/I/20x8</td>
+                      <td class="font-mono">11 Jan 20x8</td>
+                      <td>1199001 - Pinjaman Sementara</td>
+                      <td>Pinjaman Sementara - PT. AADC</td>
+                      <td class="text-right font-mono font-bold text-danger">Rp 5.000.000.000</td>
+                      <td><span class="badge-tag red">Bulat Sempurna (Rp 5.000.000.000,00)</span></td>
+                      <td>Klarifikasi Perjanjian Hutang Piutang Direksi</td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">002/-/BIN/I/20x8</td>
+                      <td class="font-mono">08 Jan 20x8</td>
+                      <td>1199001 - Pinjaman Sementara</td>
+                      <td>Pinjaman Sementara - PT. AADC</td>
+                      <td class="text-right font-mono font-bold text-danger">Rp 700.000.000</td>
+                      <td><span class="badge-tag red">Bulat Sempurna (Rp 700.000.000,00)</span></td>
+                      <td>Uji Tuntas Pengembalian Dana Kas</td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">011/-/BOU/I/20x8</td>
+                      <td class="font-mono">09 Jan 20x8</td>
+                      <td>1199001 - Pinjaman Sementara</td>
+                      <td>Pinjaman Sementara (Royalti Provisional 8% PT. Kalibata 8.700 MT)</td>
+                      <td class="text-right font-mono font-bold text-danger">Rp 500.000.000</td>
+                      <td><span class="badge-tag orange">Angka Bulat Estimasi Uang Muka</span></td>
+                      <td>Cocokkan dengan BAP Realisasi Surveyor Site</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 1.5: SUSPENSE PINJAMAN PT. AADC -->
+          <div class="sub-view-pane" id="fin-sub-suspense">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-hand-holding-dollar text-warning"></i> Audit Arus Rekening Perantara: PT. AADC (Suspense 1199001)</h3>
+                  <p>Arus dana pinjaman sementara yang digunakan berulang kali sebagai pos penampungan dana tanpa otorisasi formal.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher</th>
+                      <th>Tanggal</th>
+                      <th>Jenis Arus Kas</th>
+                      <th>Uraian Transaksi</th>
+                      <th class="text-right">Debit (Masuk)</th>
+                      <th class="text-right">Kredit (Keluar)</th>
+                      <th>Status Suspense</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">008/-/BIN/I/20x8</td>
+                      <td class="font-mono">11 Jan 20x8</td>
+                      <td><span class="badge-tag green">Dana Masuk</span></td>
+                      <td>Pinjaman Sementara - PT. AADC</td>
+                      <td class="text-right font-mono font-bold text-success">Rp 5.000.000.000</td>
+                      <td class="text-right">-</td>
+                      <td><span class="badge-tag red">Gantung / Unsettled</span></td>
+                      <td><button class="btn btn-outline-danger btn-xs" onclick="openCaseDetail('AL-2024-002')">Buka Dossier AL-002</button></td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">002/-/BIN/I/20x8</td>
+                      <td class="font-mono">08 Jan 20x8</td>
+                      <td><span class="badge-tag green">Dana Masuk</span></td>
+                      <td>Pinjaman Sementara - PT. AADC</td>
+                      <td class="text-right font-mono font-bold text-success">Rp 700.000.000</td>
+                      <td class="text-right">-</td>
+                      <td><span class="badge-tag orange">Sebagian Dilunasi</span></td>
+                      <td><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi rekening koran...')">Audit</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 2: KONTRAKTOR & VENDOR HAULING
+             ========================================================================= -->
+        <section class="view-panel" id="view-procurement">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-truck-front text-warning"></i> Forensik Kontraktor Hauling & Vendor Tambang</h1>
+              <p>Menganalisis profil risiko vendor rekanan tambang batubara: audit integritas invoice OCR, profil 360°, benturan kepentingan PT. Perkasa Kuat Sejahtera (Perusahaan Pribadi Dirut), dan kolusi tender lelang.</p>
+            </div>
+          </div>
+
+          <!-- Subnav Tabs -->
+          <div class="module-subnav-bar" id="subnav-procurement">
+            <button class="subnav-tab-btn active" data-sub="matrix"><i class="fa-solid fa-table-cells"></i> Matriks Risiko Kontraktor</button>
+            <button class="subnav-tab-btn" data-sub="ocr"><i class="fa-solid fa-file-invoice"></i> OCR Invoice & Checksum</button>
+            <button class="subnav-tab-btn" data-sub="profile360"><i class="fa-solid fa-circle-user"></i> Vendor 360° Profile</button>
+            <button class="subnav-tab-btn" data-sub="related"><i class="fa-solid fa-diagram-project"></i> Benturan Kepentingan Dirut</button>
+            <button class="subnav-tab-btn" data-sub="tender"><i class="fa-solid fa-gavel"></i> Kolusi IP Tender Lelang</button>
+          </div>
+
+          <!-- SUB-VIEW 2.1: MATRIKS RISIKO -->
+          <div class="sub-view-pane active" id="proc-sub-matrix">
+            <div class="grid-2col">
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-chart-scatter text-danger"></i> Kuadran Risiko Rekanan Tambang (Volume Spend vs Skor Anomali)</h3>
+                    <p>Pemetaan kontraktor hauling dan trading berdasarkan probabilitas risiko fraud.</p>
+                  </div>
+                </div>
+                <div style="height: 280px;">
+                  <canvas id="chart-proc-scatter"></canvas>
+                </div>
+              </div>
+
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-wand-magic-sparkles text-danger"></i> AI Document Forensics Spotlight</h3>
+                    <p>Hasil pemindaian invoice rekayasa kontraktor hauling.</p>
+                  </div>
+                </div>
+                <div class="ocr-doc-preview">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 10px;">
+                    <strong style="color: #fca5a5; font-size: 0.85rem;"><i class="fa-solid fa-file-pdf"></i> Invoice_07_INT_JJJ_XII_2023.pdf</strong>
+                    <span class="badge-tag red">TAMPERED 98%</span>
+                  </div>
+                  <p style="font-size: 0.75rem; color: #94a3b8;">Vendor: <strong>PT. MAS (Mitra Alam Sentosa)</strong> | Nilai: <strong>Rp 980.000.000</strong></p>
+                  
+                  <div class="ocr-tamper-box">
+                    <p style="font-size: 0.72rem; color: #fecaca; margin-bottom: 4px;"><strong>Bank Mandiri: 142-00-98812-1 (Bukan Rekening Resmi Vendor)</strong></p>
+                    <p style="font-size: 0.68rem; color: #cbd5e1;">Analisis Forensik: Font angka rekening disunting (Pixel Inconsistency) dan ditransfer ganda pada Voucher 001/BIN/I/20x8.</p>
+                  </div>
+
+                  <button class="btn btn-outline-danger btn-xs" style="width: 100%; margin-top: 8px;" onclick="openOcrInspectorModal('07/INT-JJJ/XII/2023')">
+                    <i class="fa-solid fa-eye"></i> Buka Forensics Inspector Penuh &rarr;
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table: Vendor Matrix -->
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-triangle-exclamation text-danger"></i> Daftar Rekanan & Kontraktor Batubara Terdaftar</h3>
+                  <p>Evaluasi menyeluruh vendor jasa hauling, penyedia ROM stockpile, dan royalti lahan.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-proc-vendor-body">
+                  <thead>
+                    <tr>
+                      <th>Nama Rekanan Tambang</th>
+                      <th>NPWP Terdaftar</th>
+                      <th>Total Nilai Transaksi</th>
+                      <th>Indikator Red Flags</th>
+                      <th>Skor Risiko</th>
+                      <th>Status Mitigasi</th>
+                      <th class="text-right">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>PT. Perkasa Kuat Sejahtera</strong><br><span style="font-size: 0.72rem; color: #64748b;">Royalty & Landowner</span></td>
+                      <td class="font-mono">31.229.182.1-018.000</td>
+                      <td class="font-mono font-bold text-danger">Rp 55.000.000</td>
+                      <td><span class="badge-tag red">CONFLICT OF INTEREST: Perusahaan Pribadi Direktur Utama</span></td>
+                      <td><span class="badge-score red">96/100</span></td>
+                      <td><span class="badge-tag red">Wajib Audit Khusus</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('004/Kalibata/INV/I/2024')"><i class="fa-solid fa-microscope"></i> OCR</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>PT. MAS (Mitra Alam Sentosa)</strong><br><span style="font-size: 0.72rem; color: #64748b;">Jasa Coal Hauling</span></td>
+                      <td class="font-mono">01.882.910.4-012.000</td>
+                      <td class="font-mono font-bold text-danger">Rp 3.840.000.000</td>
+                      <td><span class="badge-tag red">CRITICAL: Double Transfer Rp 980 Juta (001/BIN)</span></td>
+                      <td><span class="badge-score red">98/100</span></td>
+                      <td><span class="badge-tag red font-bold">Payment Hold Aktif</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('07/INT-JJJ/XII/2023')"><i class="fa-solid fa-microscope"></i> OCR</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>PT. AADC (Anugerah Alam Duta Coal)</strong><br><span style="font-size: 0.72rem; color: #64748b;">Trading & Pembiayaan</span></td>
+                      <td class="font-mono">02.441.819.3-021.000</td>
+                      <td class="font-mono font-bold text-danger">Rp 7.415.000.000</td>
+                      <td><span class="badge-tag orange">HIGH: Pinjaman Sementara Gantung Rp 5.0 Miliar</span></td>
+                      <td><span class="badge-score red">92/100</span></td>
+                      <td><span class="badge-tag green">Investigasi Direksi</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('07/INT-JJJ/XII/2023')"><i class="fa-solid fa-microscope"></i> OCR</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>PT. Pelangi Dimatamu (PT. Ninja)</strong><br><span style="font-size: 0.72rem; color: #64748b;">Stockpile ROM Provider</span></td>
+                      <td class="font-mono">01.992.341.2-024.000</td>
+                      <td class="font-mono font-bold">Rp 420.000.000</td>
+                      <td><span class="badge-tag blue">Stock ROM Km 107 Uncrushed Coal & Royalti 15%</span></td>
+                      <td><span class="badge-score orange">74/100</span></td>
+                      <td><span class="badge-tag green">Cross-Check Surveyor</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('F-183/INV/TG-TAN2/XII/2023')"><i class="fa-solid fa-microscope"></i> OCR</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SUB-VIEW 2.2: OCR FORENSICS -->
+          <div class="sub-view-pane" id="proc-sub-ocr">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-microscope text-danger"></i> Antrean Analisis Forensik Dokumen & OCR Checksum</h3>
+                  <p>Validasi kalkulasi matematika otomatis dan pencocokan nomor rekening fisik vs ERP.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-proc-ocr-table">
+                  <thead>
+                    <tr>
+                      <th>No Dokumen Invoice</th>
+                      <th>Nama Rekanan Batubara</th>
+                      <th>Tanggal</th>
+                      <th>Nilai Tagihan</th>
+                      <th>Math Checksum</th>
+                      <th>ELA Tamper Score</th>
+                      <th>Pencocokan Rekening Bank</th>
+                      <th class="text-right">Inspeksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">07/INT-JJJ/XII/2023</td>
+                      <td><strong>PT. MAS (Mitra Alam Sentosa)</strong></td>
+                      <td class="font-mono">05 Jan 20x8</td>
+                      <td class="font-mono font-bold text-danger">Rp 980.000.000</td>
+                      <td><span class="badge-tag red">ANOMALY (DOUBLE TF)</span></td>
+                      <td><span class="badge-score red">98% TAMPERED</span></td>
+                      <td><span class="badge-tag red">MISMATCH (Rekening Siluman Mandiri)</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('07/INT-JJJ/XII/2023')">Inspector</button></td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">030/-/BOU/I/20x8</td>
+                      <td><strong>Supplier Mesin ABC</strong></td>
+                      <td class="font-mono">16 Jan 20x8</td>
+                      <td class="font-mono font-bold text-danger">Rp 1.554.000.000</td>
+                      <td><span class="badge-tag red">SPECS MISMATCH</span></td>
+                      <td><span class="badge-score red">91% Underspec</span></td>
+                      <td><span class="badge-tag red">Fisik Beda Merk (Register Abc 11)</span></td>
+                      <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openOcrInspectorModal('030/BOU')">Inspector</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 2.3: VENDOR 360 -->
+          <div class="sub-view-pane" id="proc-sub-profile360">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-id-badge text-danger"></i> Profil Mendalam Vendor 360° (UBO, Rekening & Kontrak)</h3>
+                  <p>Informasi struktur kepemilikan perseroan, rekening resmi, dan ringkasan benturan kepentingan.</p>
+                </div>
+              </div>
+              <div id="vendor-360-container">
+                <div class="grid-2col" style="margin-top: 10px;">
+                  <div style="background-color: #f8fafc; border: 1px solid var(--border); border-left: 4px solid var(--danger); border-radius: var(--radius-md); padding: 18px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                      <h4 style="font-weight: 800; color: #0f172a; font-size: 1rem;"><i class="fa-solid fa-building text-danger"></i> PT. Perkasa Kuat Sejahtera</h4>
+                      <span class="badge-tag red">CONFLICT OF INTEREST (DIRUT)</span>
+                    </div>
+                    <p style="font-size: 0.78rem; color: #64748b; line-height: 1.6;">
+                      <strong>NPWP:</strong> 31.229.182.1-018.000 | <strong>Kategori:</strong> Royalty & Landowner Tambang<br>
+                      <strong>Catatan Auditor:</strong> Merupakan perusahaan pribadi Direktur Utama. Wajib diawasi agar tidak terjadi korupsi benturan kepentingan.<br>
+                      <strong>Transaksi Terkait:</strong> Voucher 036/BOU (Royalti Kalibata), Voucher 037/BOU, Voucher 038/BOU.<br>
+                      <strong>Rekomendasi:</strong> Audit kepatuhan penentuan tarif royalti independen.
+                    </p>
+                  </div>
+
+                  <div style="background-color: #f8fafc; border: 1px solid var(--border); border-left: 4px solid var(--danger); border-radius: var(--radius-md); padding: 18px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                      <h4 style="font-weight: 800; color: #0f172a; font-size: 1rem;"><i class="fa-solid fa-truck text-danger"></i> PT. MAS (Mitra Alam Sentosa)</h4>
+                      <span class="badge-tag red">DOUBLE TF RISK</span>
+                    </div>
+                    <p style="font-size: 0.78rem; color: #64748b; line-height: 1.6;">
+                      <strong>NPWP:</strong> 01.882.910.4-012.000 | <strong>Kategori:</strong> Kontraktor Jasa Coal Hauling<br>
+                      <strong>Total Kontrak:</strong> Rp 3.840.000.000 (2024)<br>
+                      <strong>Nomor Rekening Terdaftar:</strong> Bank BCA 883-019-2811 (Rek. Resmi)<br>
+                      <strong>Anomali Terdeteksi:</strong> Voucher 001/BIN/I/20x8 (Double TF Rp 980 Juta) dialihkan ke Bank Mandiri 142-009-8812.<br>
+                      <strong>Status Hukum:</strong> Pembayaran Ditahan (Payment Hold Aktif).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 2.4: RELATED PARTY -->
+          <div class="sub-view-pane" id="proc-sub-related">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-diagram-project text-danger"></i> Deteksi Benturan Kepentingan (Conflict of Interest Direktur Utama)</h3>
+                  <p>Temuan audit atas kepemilikan entitas rekanan oleh pejabat internal perseroan.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-proc-related-table">
+                  <thead>
+                    <tr>
+                      <th>Pihak Terkait</th>
+                      <th>Jabatan Formal</th>
+                      <th>Rekanan Terafiliasi</th>
+                      <th>Temuan Audit Forensik (Notes dummy.xlsx)</th>
+                      <th>Tingkat Risiko</th>
+                      <th>Voucher Terkait</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Direktur Utama</strong></td>
+                      <td>Direktur Utama Perseroan</td>
+                      <td><strong>PT. Perkasa Kuat Sejahtera</strong></td>
+                      <td style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">Perusahaan pribadi Direktur Utama yang menerima pembayaran royalti batubara secara berulang</td>
+                      <td><span class="badge-score red">CRITICAL</span></td>
+                      <td class="font-mono font-bold">Voucher 036, 037, 038/BOU</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Rudi Hartono (Staff AP)</strong></td>
+                      <td>Finance AP & Kasir</td>
+                      <td><strong>PT. MAS (Mitra Alam Sentosa)</strong></td>
+                      <td style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">Rekening Bank Mandiri 142-009-8812 terdaftar atas nama istri staf AP</td>
+                      <td><span class="badge-score red">CRITICAL</span></td>
+                      <td class="font-mono font-bold">Voucher 001/BIN/I/20x8</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 2.5: TENDER -->
+          <div class="sub-view-pane" id="proc-sub-tender">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-gavel text-danger"></i> Analisis Kolusi Lelang Hauling (Bid Rigging & Identical IP)</h3>
+                  <p>Penawaran lelang jasa hauling batubara yang diunggah dari alamat IP Address yang sama.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-proc-tender-table">
+                  <thead>
+                    <tr>
+                      <th>No Paket Pengadaan</th>
+                      <th>Paket Pekerjaan Tambang</th>
+                      <th>Pemenang Tender</th>
+                      <th>Peserta Pembanding</th>
+                      <th>Hasil Analisis IP Address</th>
+                      <th>Indikasi Kolusi FDS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">TND-2024-COAL-009</td>
+                      <td><strong>Jasa Hauling Batubara 2.000 MT Stockpile Titan</strong></td>
+                      <td><span class="badge-tag green">PT. MAS (Rp 980 Jt)</span></td>
+                      <td style="font-size: 0.74rem; color: #64748b;">PT. Berkah Coal (Rp 995 Jt), CV. Cahaya Hauling (Rp 1.01 M)</td>
+                      <td class="font-mono text-danger font-bold" style="font-size: 0.76rem;">MATCH: 192.168.1.45 (Sama dengan IP Internal Finance)</td>
+                      <td><span class="badge-tag red">CRITICAL: Identical IP Submission</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 3: PAJAK & EKUALISASI DJP
+             ========================================================================= -->
+        <section class="view-panel" id="view-tax">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-scale-balanced text-success"></i> Pajak & Ekualisasi DJP 3-Way Compliance (JendelaTax)</h1>
+              <p>Didukung integrasi resmi JendelaTax (PJAP): Rekonsiliasi otomatis 3 arah antara Buku Kas Mandiri (1000001) $\leftrightarrow$ SPT Masa Pajak $\leftrightarrow$ Live Server DJP untuk audit PPh 22 Batubara, PPh 23, dan Restitusi PPh Badan Rp 4,9 Miliar.</p>
+            </div>
+          </div>
+
+          <!-- Subnav Tabs -->
+          <div class="module-subnav-bar" id="subnav-tax">
+            <button class="subnav-tab-btn active" data-sub="equalization"><i class="fa-solid fa-arrows-split-up-and-left"></i> 3-Way Equalization (Buku-SPT-DJP)</button>
+            <button class="subnav-tab-btn" data-sub="pph22"><i class="fa-solid fa-file-invoice-dollar"></i> PPh 22 Batubara (014/BOU)</button>
+            <button class="subnav-tab-btn" data-sub="pph23"><i class="fa-solid fa-receipt"></i> PPh 23 Sewa & Jasa</button>
+            <button class="subnav-tab-btn" data-sub="restitusi"><i class="fa-solid fa-hand-holding-dollar"></i> Restitusi PPh Badan Rp 4.9M</button>
+          </div>
+
+          <!-- SUB-VIEW 3.1: 3-WAY EQUALIZATION -->
+          <div class="sub-view-pane active" id="tax-sub-equalization">
+            
+            <div class="equalization-box">
+              <div class="eq-column gl">
+                <div class="eq-header">
+                  <span>1. Buku Kas (Mandiri 1000001)</span>
+                  <i class="fa-solid fa-book text-info"></i>
+                </div>
+                <div class="eq-val text-info" id="eq-gl-val">Rp 5.437.230.000</div>
+                <p style="font-size: 0.72rem; color: #64748b; margin-top: 6px;">Total Realisasi Pembayaran & Penerimaan Pajak</p>
+              </div>
+
+              <div class="eq-column spt">
+                <div class="eq-header">
+                  <span>2. Pelaporan SPT Masa</span>
+                  <i class="fa-solid fa-file-lines text-warning"></i>
+                </div>
+                <div class="eq-val text-warning" id="eq-spt-val">Rp 5.437.230.000</div>
+                <p style="font-size: 0.72rem; color: #64748b; margin-top: 6px;">Realisasi SPT Masa PPh 22, 23, 4(2) & Restitusi Badan</p>
+              </div>
+
+              <div class="eq-column djp">
+                <div class="eq-header">
+                  <span>3. Validasi Live DJP</span>
+                  <i class="fa-solid fa-building-columns text-success"></i>
+                </div>
+                <div class="eq-val text-success" id="eq-djp-val">Rp 5.437.230.000</div>
+                <p style="font-size: 0.72rem; color: #64748b; margin-top: 6px;">Nomor NTPN & SKPLB Terverifikasi 100% DJP</p>
+              </div>
+            </div>
+
+            <!-- Table: 3-Way Equalization -->
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-table-list text-success"></i> Rincian Ekualisasi Pos Perpajakan Riil Tambang Batubara</h3>
+                  <p>Pencocokan pos pajak yang tercatat pada Buku Kas Bank Mandiri dummy.xlsx.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-tax-equalization-body">
+                  <thead>
+                    <tr>
+                      <th>Pos Pajak & No Voucher</th>
+                      <th>Nilai Buku Kas Mandiri</th>
+                      <th>Nilai SPT Terlapor</th>
+                      <th>Server DJP (JendelaTax)</th>
+                      <th>Selisih (Gap)</th>
+                      <th>Status Kepatuhan</th>
+                      <th class="text-right">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>1. Restitusi PPh Badan (016/BOU)</strong></td>
+                      <td class="font-mono font-bold">Rp 4.900.000.000</td>
+                      <td class="font-mono">Rp 4.900.000.000</td>
+                      <td class="font-mono text-success font-bold">Rp 4.900.000.000</td>
+                      <td class="font-mono font-bold text-success">Rp 0</td>
+                      <td><span class="badge-tag green">Sesuai (Clear)</span></td>
+                      <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi pos restitusi')">Verified</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>2. PPh 22 Pembelian Batubara (014/BOU)</strong></td>
+                      <td class="font-mono font-bold">Rp 510.000.000</td>
+                      <td class="font-mono">Rp 510.000.000</td>
+                      <td class="font-mono text-success font-bold">Rp 510.000.000</td>
+                      <td class="font-mono font-bold text-success">Rp 0</td>
+                      <td><span class="badge-tag green">NTPN Valid 100%</span></td>
+                      <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi pos PPh 22')">Verified</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>3. PPh 23 Sewa Alat & Rental (012/BOU)</strong></td>
+                      <td class="font-mono font-bold">Rp 26.000.000</td>
+                      <td class="font-mono">Rp 26.000.000</td>
+                      <td class="font-mono text-success font-bold">Rp 26.000.000</td>
+                      <td class="font-mono font-bold text-success">Rp 0</td>
+                      <td><span class="badge-tag green">e-Bupot Sesuai</span></td>
+                      <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi pos PPh 23')">Verified</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>4. PPh 23 Jasa Transportir (013/BOU)</strong></td>
+                      <td class="font-mono font-bold">Rp 230.000</td>
+                      <td class="font-mono">Rp 230.000</td>
+                      <td class="font-mono text-success font-bold">Rp 230.000</td>
+                      <td class="font-mono font-bold text-success">Rp 0</td>
+                      <td><span class="badge-tag green">e-Bupot Sesuai</span></td>
+                      <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi pos PPh 23 Jasa')">Verified</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- SUB-VIEW 3.2: PPH 22 BATUBARA -->
+          <div class="sub-view-pane" id="tax-sub-pph22">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-file-invoice-dollar text-success"></i> Pengawasan PPh Pasal 22 Pembelian Batubara (Tarif 1.5%)</h3>
+                  <p>Voucher 014/-/BOU/I/20x8: Penyetoran PPh 22 masa Desember atas pengadaan komoditas batubara.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>No Bukti Setor / NTPN</th>
+                      <th>Objek Pajak</th>
+                      <th>Dasar Pengenaan (DPP)</th>
+                      <th>Tarif</th>
+                      <th>PPh 22 Terutang</th>
+                      <th>Status Setor DJP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">NTPN-8819201948190021</td>
+                      <td>Pembelian Batubara Masa Des 2023</td>
+                      <td class="font-mono font-bold">Rp 34.000.000.000</td>
+                      <td>1.5%</td>
+                      <td class="font-mono font-bold text-success">Rp 510.000.000</td>
+                      <td><span class="badge-tag green">LUNAS & VALID</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 3.3: PPH 23 -->
+          <div class="sub-view-pane" id="tax-sub-pph23">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-receipt text-success"></i> Pengawasan PPh Pasal 23 Sewa Alat Berat & Jasa Hauling</h3>
+                  <p>Voucher 012/-/BOU (Sewa Alat) & 013/-/BOU (Jasa Transportir).</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>No Voucher</th>
+                      <th>Kategori Transaksi</th>
+                      <th>DPP Jasa/Sewa</th>
+                      <th>PPh 23 Dipotong</th>
+                      <th>NTPN / Bukti Potong</th>
+                      <th>Status Validasi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">012/-/BOU/I/20x8</td>
+                      <td>Sewa Alat Berat & Rental Excavator</td>
+                      <td class="font-mono">Rp 1.300.000.000</td>
+                      <td class="font-mono font-bold text-success">Rp 26.000.000 (2%)</td>
+                      <td class="font-mono">NTPN-2918001928</td>
+                      <td><span class="badge-tag green">Approved DJP</span></td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">013/-/BOU/I/20x8</td>
+                      <td>Jasa Perbaikan & Service Alat Site</td>
+                      <td class="font-mono">Rp 11.500.000</td>
+                      <td class="font-mono font-bold text-success">Rp 230.000 (2%)</td>
+                      <td class="font-mono">NTPN-2918001929</td>
+                      <td><span class="badge-tag green">Approved DJP</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 3.4: RESTITUSI PPH BADAN -->
+          <div class="sub-view-pane" id="tax-sub-restitusi">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-hand-holding-dollar text-success"></i> Audit Penerimaan Restitusi PPh Badan Rp 4,9 Miliar (016/BOU)</h3>
+                  <p>Verifikasi kepatuhan penerimaan dana lebih bayar pajak dari Kantor Pelayanan Pajak (KPP) ke rekening Bank Mandiri.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-tax-restitusi-table">
+                  <thead>
+                    <tr>
+                      <th>Tahun Pajak</th>
+                      <th>Nilai Restitusi Diterima</th>
+                      <th>No Surat Ketetapan (SKPLB)</th>
+                      <th>Status Pemeriksaan DJP</th>
+                      <th>Evaluasi Rantai Faktur</th>
+                      <th>Rekomendasi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Tahun Pajak 2023 (Penerimaan Jan 20x8)</strong></td>
+                      <td class="font-mono font-bold text-success" style="font-size: 0.95rem;">Rp 4.900.000.000</td>
+                      <td class="font-mono">SKPLB-00192/PPh-Badan/KPP-Madya/2024</td>
+                      <td><span class="badge-tag green">Pemeriksaan Selesai & Dana Masuk Mandiri</span></td>
+                      <td><span class="badge-tag blue">Low Risk (Faktur Masukan Terverifikasi)</span></td>
+                      <td><span class="badge-tag green">Arsipkan ke Digital Vault</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 4: KONTROL INTERNAL & SOD
+             ========================================================================= -->
+        <section class="view-panel" id="view-approvals">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-key text-info"></i> Kontrol Internal, Pemisahan Wewenang (SoD) & Override Log</h1>
+              <p>Mendeteksi pelanggaran segregasi tugas antara staf pembuat voucher kasir dengan eksekutor transfer bank, override limit wewenang pinjaman Rp 5,0 Miliar, dan pengadaan mesin underspek Rp 1,55 Miliar.</p>
+            </div>
+          </div>
+
+          <!-- Subnav Tabs -->
+          <div class="module-subnav-bar" id="subnav-approvals">
+            <button class="subnav-tab-btn active" data-sub="sod_matrix"><i class="fa-solid fa-table-cells"></i> Matriks Pemisahan Wewenang</button>
+            <button class="subnav-tab-btn" data-sub="toxic"><i class="fa-solid fa-user-slash"></i> Pelanggaran Hak Akses AP</button>
+            <button class="subnav-tab-btn" data-sub="override"><i class="fa-solid fa-unlock-keyhole"></i> Override Pinjaman Rp 5M</button>
+            <button class="subnav-tab-btn" data-sub="rubber"><i class="fa-solid fa-bolt"></i> Rubber Stamping Approvals</button>
+          </div>
+
+          <!-- SUB-VIEW 4.1: INTERACTIVE SOD MATRIX -->
+          <div class="sub-view-pane active" id="app-sub-sod_matrix">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-table-cells text-info"></i> Matriks Pemisahan Tugas (Segregation of Duties Matrix)</h3>
+                  <p>Pemetaan risiko benturan wewenang transaksi operasional tambang batubara.</p>
+                </div>
+              </div>
+
+              <!-- PRE-RENDERED GRID -->
+              <div class="sod-matrix-grid" id="sod-matrix-container">
+                <div class="sod-cell header">Aktivitas ERP Tambang</div>
+                <div class="sod-cell header">Input PO Batubara</div>
+                <div class="sod-cell header">Timbangan GR</div>
+                <div class="sod-cell header">Input Invoice AP</div>
+                <div class="sod-cell header">Approve Payment</div>
+                <div class="sod-cell header">Eksekusi Bank TF</div>
+
+                <div class="sod-cell header">Input PO Batubara</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell danger">Pelanggaran (3)</div>
+                <div class="sod-cell review">Review (1)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+
+                <div class="sod-cell header">Timbangan GR</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell danger">Pelanggaran (2)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+
+                <div class="sod-cell header">Input Invoice AP</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell danger">Pelanggaran (4)</div>
+                <div class="sod-cell danger" style="background-color: #fecaca; color: #991b1b; font-weight: 800;">KRITIS (Rudi H.)</div>
+
+                <div class="sod-cell header">Approve Payment</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell danger">Pelanggaran (5)</div>
+
+                <div class="sod-cell header">Eksekusi Bank TF</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+                <div class="sod-cell safe">Aman (0)</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 4.2: TOXIC COMBINATIONS -->
+          <div class="sub-view-pane" id="app-sub-toxic">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-user-slash text-danger"></i> Daftar Pengguna dengan Kombinasi Akses Terlarang</h3>
+                  <p>User yang memiliki hak input voucher sekaligus eksekusi pembayaran Mandiri.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-app-toxic-body">
+                  <thead>
+                    <tr>
+                      <th>User ID & Nama</th>
+                      <th>Jabatan Formal</th>
+                      <th>Kombinasi Akses Terlarang</th>
+                      <th>Jumlah Eksekusi Transaksi</th>
+                      <th>Tingkat Keparahan</th>
+                      <th>Rekomendasi Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Rudi Hartono (USR-AP-012)</strong></td>
+                      <td>Staff AP & Kasir Mining</td>
+                      <td class="font-mono text-danger font-bold" style="font-size: 0.74rem;">AP_INVOICE_ENTRY + BANK_TRANSFER_EXECUTE</td>
+                      <td class="font-mono">48 Transaksi Kas</td>
+                      <td><span class="badge-score red">CRITICAL</span></td>
+                      <td><span class="badge-tag red font-bold">Segregasi: Cabut Hak Akses Eksekusi Bank Segera</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Bambang Irawan (USR-GL-004)</strong></td>
+                      <td>GL & Treasury Admin</td>
+                      <td class="font-mono text-danger font-bold" style="font-size: 0.74rem;">JOURNAL_POSTING + SUSPENSE_CLEARING</td>
+                      <td class="font-mono">12 Transaksi Pinjaman</td>
+                      <td><span class="badge-score red">HIGH</span></td>
+                      <td><span class="badge-tag red font-bold">Wajibkan Dual-Control Authorization</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 4.3: OVERRIDES LOG -->
+          <div class="sub-view-pane" id="app-sub-override">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-unlock-keyhole text-danger"></i> Log Override Kewenangan Otorisasi Pencairan Kas</h3>
+                  <p>Pelanggaran limit approval pencairan pinjaman sementara Rp 5,0 Miliar.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-app-override-table">
+                  <thead>
+                    <tr>
+                      <th>Waktu Eksekusi</th>
+                      <th>User Otorisator</th>
+                      <th>Jenis Override Persetujuan</th>
+                      <th>Batas Kewenangan (Limit)</th>
+                      <th>Nilai Transaksi Riil</th>
+                      <th>Evaluasi FDS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono text-danger font-bold">11 Jan 20x8 01:15</td>
+                      <td><strong>Agus Subekti (Direktur Operasional)</strong></td>
+                      <td>Pencairan Pinjaman PT. AADC Rp 5 Miliar tanpa Memo BAP</td>
+                      <td class="font-mono">Rp 1.000.000.000</td>
+                      <td class="font-mono font-bold text-danger">Rp 5.000.000.000</td>
+                      <td><span class="badge-tag red">HIGH RISK: Unjustified Memo Override</span></td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono text-danger font-bold">05 Jan 20x8 23:42</td>
+                      <td><strong>FDS System Bot</strong></td>
+                      <td>Automatic Payment Hold Jasa Hauling PT. MAS</td>
+                      <td class="font-mono">Rule: Duplicate Invoice</td>
+                      <td class="font-mono font-bold text-danger">Rp 980.000.000</td>
+                      <td><span class="badge-tag green">SYSTEM SUCCESS: Loss Prevented</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 4.4: RUBBER STAMPING -->
+          <div class="sub-view-pane" id="app-sub-rubber">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-bolt text-danger"></i> Evaluasi Rubber Stamping Approval (Persetujuan Cepat Tanpa Review)</h3>
+                  <p>Approver yang menyetujui puluhan dokumen pengadaan batubara dalam hitungan detik.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-app-rubber-table">
+                  <thead>
+                    <tr>
+                      <th>Nama Penyetuju (Approver)</th>
+                      <th>Waktu Rata-Rata Review</th>
+                      <th>Volume Approval Tergesa</th>
+                      <th>Total Nilai Diloloskan</th>
+                      <th>Tingkat Risiko</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Hendra Wijaya (Manager Logistik)</strong></td>
+                      <td class="font-mono text-danger font-bold">2.4 Detik / Dokumen</td>
+                      <td>35 PO Hauling Batubara</td>
+                      <td class="font-mono font-bold">Rp 1.450.000.000</td>
+                      <td><span class="badge-score red">HIGH RISK (Rubber Stamping)</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 5: TIMBANGAN & LOGISTIK TAMBANG
+             ========================================================================= -->
+        <section class="view-panel" id="view-operational">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-boxes-stacked text-purple"></i> Logistik Tambang Batubara & Jembatan Timbang Km 107</h1>
+              <p>Menganalisis data fisik ritase jembatan timbang kontraktor hauling batubara, mendeteksi pengangkutan fiktif (Phantom Hauling GPS void), selisih stockopname stockpile ROM, dan reject batubara high-ash.</p>
+            </div>
+          </div>
+
+          <!-- Subnav Tabs -->
+          <div class="module-subnav-bar" id="subnav-operational">
+            <button class="subnav-tab-btn active" data-sub="timbangan"><i class="fa-solid fa-truck-ramp-box"></i> Jembatan Timbang Km 107</button>
+            <button class="subnav-tab-btn" data-sub="phantom"><i class="fa-solid fa-route"></i> Phantom Hauling (GPS)</button>
+            <button class="subnav-tab-btn" data-sub="stockpile"><i class="fa-solid fa-boxes-stacked"></i> Susut Stock ROM Titan</button>
+            <button class="subnav-tab-btn" data-sub="void"><i class="fa-solid fa-rotate-left"></i> Reject Batubara High Ash</button>
+          </div>
+
+          <!-- SUB-VIEW 5.1: TIMBANGAN -->
+          <div class="sub-view-pane active" id="ops-sub-timbangan">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-truck-ramp-box text-danger"></i> Rekap Penimbangan Jembatan Timbang ISP Titan Km 107</h3>
+                  <p>Pencocokan tonase timbangan fisik site tambang dengan tagihan kas di Bank Mandiri.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-ops-cashier-table">
+                  <thead>
+                    <tr>
+                      <th>Rute & Lokasi Pengangkutan Batubara</th>
+                      <th>Kontraktor Hauling</th>
+                      <th>Volume Ritase & Tonase (MT)</th>
+                      <th>Jarak Tempuh</th>
+                      <th>Tarif Kontrak</th>
+                      <th>Catatan Forensik FDS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Pit Kalibata -&gt; Stockpile Titan Km 107</strong></td>
+                      <td><span class="badge-tag blue">PT. MAS</span></td>
+                      <td class="font-mono font-bold">68 Rit (2.006,03 MT)</td>
+                      <td class="font-mono">25,1 km</td>
+                      <td class="font-mono font-bold">Rp 1.600 / MT / km</td>
+                      <td style="font-size: 0.78rem; font-weight: 600; color: #b91c1c;">Anomali Double Transfer Rp 980 Jt (Voucher 001/BIN)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Stock ROM PT. Ninja -&gt; ISP Titan Km 107</strong></td>
+                      <td><span class="badge-tag blue">PT. Ninja</span></td>
+                      <td class="font-mono font-bold">14 Rit (410,46 MT)</td>
+                      <td class="font-mono">Stock ROM</td>
+                      <td class="font-mono font-bold">Rp 320.000 / MT</td>
+                      <td style="font-size: 0.78rem; font-weight: 600; color: #047857;">Stockopname PI 20040123000697 (Sesuai)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Kalibata -&gt; Stockpile PT. MAS</strong></td>
+                      <td><span class="badge-tag blue">Koperasi IBL</span></td>
+                      <td class="font-mono font-bold">16 Rit (452,17 MT)</td>
+                      <td class="font-mono">24,4 km</td>
+                      <td class="font-mono font-bold">Rp 1.600 / MT / km</td>
+                      <td style="font-size: 0.78rem; font-weight: 600; color: #047857;">Jasa Angkutan Terverifikasi (Rp 19 Juta)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>KDM -&gt; Stockpile MAS</strong></td>
+                      <td><span class="badge-tag blue">PT. Pahala Kehidupan</span></td>
+                      <td class="font-mono font-bold">32 Rit (985,00 MT)</td>
+                      <td class="font-mono">Lintas Site</td>
+                      <td class="font-mono font-bold">Rp 40.160 / MT</td>
+                      <td style="font-size: 0.78rem; font-weight: 600; color: #047857;">Sesuai SPK 001/INV/DT/ESA</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 5.2: PHANTOM HAULING -->
+          <div class="sub-view-pane" id="ops-sub-phantom">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-route text-danger"></i> Deteksi Pengangkutan Fiktif & GPS Void (Phantom Hauling)</h3>
+                  <p>Truk tronton batubara tanpa rekam jejak GPS atau deviasi rute keluar koridor tambang.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-ops-phantom-table">
+                  <thead>
+                    <tr>
+                      <th>Kode Ritase</th>
+                      <th>Nomor Polisi Unit Tronton</th>
+                      <th>Pengemudi</th>
+                      <th>Muatan Batubara</th>
+                      <th>Hasil Pelacakan GPS & Jembatan Timbang</th>
+                      <th>Indikasi Anomali</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold">RIT-2024-00192</td>
+                      <td class="font-mono font-bold text-danger">BG 8812 LM (Tronton 30T)</td>
+                      <td>Ahmad S.</td>
+                      <td class="font-mono">31,5 MT Batubara</td>
+                      <td style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">GPS Mati / Tidak Melintas Jembatan Timbang Km 107</td>
+                      <td><span class="badge-tag red">CRITICAL: Phantom Hauling Risk</span></td>
+                    </tr>
+                    <tr>
+                      <td class="font-mono font-bold">RIT-2024-00195</td>
+                      <td class="font-mono font-bold text-danger">BG 8410 KT (Dump Truck)</td>
+                      <td>Mulyadi</td>
+                      <td class="font-mono">28,0 MT Batubara</td>
+                      <td style="font-size: 0.78rem; color: #b91c1c; font-weight: 600;">Deviasi Jalur Keluar Koridor Tambang (12.4 km)</td>
+                      <td><span class="badge-tag red">HIGH: Unauthorized Route</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 5.3: STOCKPILE INVENTORY LOSS -->
+          <div class="sub-view-pane" id="ops-sub-stockpile">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-boxes-stacked text-danger"></i> Selisih Stock Opname Stockpile Fisik vs ERP (Stock Shrinkage)</h3>
+                  <p>Penyusutan inventori batubara pada Stockpile ISP Titan Km 107 dan Stock ROM Kalibata.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-ops-inventory-table">
+                  <thead>
+                    <tr>
+                      <th>Lokasi Stockpile / ROM</th>
+                      <th>Grade Kalori Batubara</th>
+                      <th>Saldo Buku ERP</th>
+                      <th>Hasil Survey Drone / Fisik</th>
+                      <th>Selisih Tonase (Loss)</th>
+                      <th>Nilai Kerugian</th>
+                      <th>Evaluasi Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Stockpile Utama ISP Titan Km 107</strong></td>
+                      <td><span class="badge-tag blue">GAR 4200 (Medium Calorie)</span></td>
+                      <td class="font-mono">14.250 MT</td>
+                      <td class="font-mono font-bold">12.800 MT</td>
+                      <td class="font-mono font-bold text-danger">-1.450 MT (10.1%)</td>
+                      <td class="font-mono font-bold text-danger">Rp 464.000.000</td>
+                      <td><span class="badge-tag red">HIGH: Stock Loss Investigation</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Stock ROM Pit Kalibata</strong></td>
+                      <td><span class="badge-tag blue">GAR 3800 (Low Calorie)</span></td>
+                      <td class="font-mono">8.700 MT</td>
+                      <td class="font-mono font-bold">8.700 MT</td>
+                      <td class="font-mono font-bold text-success">0 MT (0%)</td>
+                      <td class="font-mono font-bold text-success">Rp 0</td>
+                      <td><span class="badge-tag green">Aman / Balance</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 5.4: REJECT BATUBARA VOID -->
+          <div class="sub-view-pane" id="ops-sub-void">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-rotate-left text-danger"></i> Log Pengembalian Batubara Ditolak (Reject Batubara Void)</h3>
+                  <p>Batubara reject (kadar abu/ash > 18%) yang dikembalikan ke kontraktor asal.</p>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="table-ops-return-table">
+                  <thead>
+                    <tr>
+                      <th>Nomor Slip Void / Reject</th>
+                      <th>Alasan Penolakan Batubara</th>
+                      <th>Volume Reject</th>
+                      <th>Kontraktor Asal</th>
+                      <th>Pihak Otorisator</th>
+                      <th>Status Administrasi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="font-mono font-bold text-danger">SLIP-VOID-0091</td>
+                      <td style="font-size: 0.78rem;">Batubara High Ash (> 18%) Ditolak Buyer Franco Baturaja</td>
+                      <td class="font-mono font-bold">27,99 MT</td>
+                      <td><strong>PT. Kuda Mas Paint</strong></td>
+                      <td>QC Lead Tambang</td>
+                      <td><span class="badge-tag green">BAP Pengembalian Terbit</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 6: CASE MANAGEMENT QUEUE
+             ========================================================================= -->
+        <section class="view-panel" id="view-case_mgmt">
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-briefcase text-primary"></i> Case Management & Whistleblower Integration</h1>
+              <p>Pusat triase berkas perkara investigasi audit, penugasan investigator, pelacakan SLA, dan integrasi laporan whistleblower terenkripsi.</p>
+            </div>
+            <div class="module-banner-actions">
+              <button class="btn btn-primary btn-sm" onclick="openNewCaseModal()"><i class="fa-solid fa-plus"></i> Buka Kasus Baru</button>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <div class="content-card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-folder-tree text-primary"></i> Antrean Triase Kasus Investigasi Tambang Batubara</h3>
+                <p>Seluruh berkas perkara aktif yang ditangani oleh tim forensik internal.</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Judul Perkara</th>
+                    <th>Modul Sumber</th>
+                    <th>Entitas / Target</th>
+                    <th>Nilai Eksposur</th>
+                    <th>Severity</th>
+                    <th>Status Berkas</th>
+                    <th>Lead Investigator</th>
+                    <th class="text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-case-queue-body">
+                  <tr>
+                    <td class="font-mono font-bold text-danger">AL-2024-001</td>
+                    <td><strong>Indikasi Double Transfer Jasa Hauling Batubara PT. MAS (Rp 980 Juta) & Rekening Siluman</strong></td>
+                    <td><span class="badge-tag blue">Procurement & Cash Bank</span></td>
+                    <td><strong>PT. MAS (Mitra Alam Sentosa)</strong></td>
+                    <td class="font-mono font-bold text-danger">Rp 980.000.000</td>
+                    <td><span class="badge-score red">High</span></td>
+                    <td><span class="badge-tag orange">In Progress</span></td>
+                    <td>Budi Santoso, CFE</td>
+                    <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openCaseDetail('AL-2024-001')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono font-bold text-danger">AL-2024-002</td>
+                    <td><strong>Arus Dana Pinjaman Sementara Berulang PT. AADC (Total Rp 7.415 Miliar) Tanpa BAP Direksi</strong></td>
+                    <td><span class="badge-tag blue">Financial & UEBA</span></td>
+                    <td><strong>PT. AADC (Trading Partner)</strong></td>
+                    <td class="font-mono font-bold text-danger">Rp 5.000.000.000</td>
+                    <td><span class="badge-score red">High</span></td>
+                    <td><span class="badge-tag green">Triage Pending</span></td>
+                    <td>Siti Rahma, CISA</td>
+                    <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openCaseDetail('AL-2024-002')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+                  </tr>
+                  <tr>
+                    <td class="font-mono font-bold text-danger">AL-2024-003</td>
+                    <td><strong>Benturan Kepentingan PT. Perkasa Kuat Sejahtera (Perusahaan Pribadi Dirut)</strong></td>
+                    <td><span class="badge-tag blue">Vendor & Royalty</span></td>
+                    <td><strong>Direktur Utama / PT. Perkasa Kuat</strong></td>
+                    <td class="font-mono font-bold text-danger">Rp 55.000.000</td>
+                    <td><span class="badge-score red">Critical</span></td>
+                    <td><span class="badge-tag orange">Audit Khusus</span></td>
+                    <td>Budi Santoso, CFE</td>
+                    <td class="text-right"><button class="btn btn-primary btn-xs" onclick="openCaseDetail('AL-2024-003')"><i class="fa-solid fa-folder-open"></i> Dossier</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 7: EXECUTIVE DASHBOARD (POJK 12/2024)
+             ========================================================================= -->
+        <section class="view-panel" id="view-executive">
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-chart-line text-info"></i> Executive Risk & Anti-Fraud Compliance (POJK 12/2024)</h1>
+              <p>Ringkasan eksekutif untuk Direksi & Dewan Komisaris: nilai kerugian tercegah (loss prevention), peta panas risiko site tambang, dan indeks efektivitas pengendalian anti-fraud.</p>
+            </div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon red"><i class="fa-solid fa-shield-virus"></i></div>
+                <span class="kpi-trend up-red">Total Terdeteksi</span>
+              </div>
+              <div class="kpi-value font-mono">Rp 12.33 M</div>
+              <div class="kpi-label">Total Nilai Kasus Terdeteksi</div>
+              <div class="kpi-footer-note">5 Berkas Perkara Anomali Aktif</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon green"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <span class="kpi-trend up-green">Loss Prevented</span>
+              </div>
+              <div class="kpi-value font-mono">Rp 11.13 M</div>
+              <div class="kpi-label">Dana Berhasil Diselamatkan (Hold)</div>
+              <div class="kpi-footer-note">Payment Hold & Rekening Suspensi</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon blue"><i class="fa-solid fa-percent"></i></div>
+                <span class="kpi-trend up-green">90.2% Rate</span>
+              </div>
+              <div class="kpi-value font-mono">90.2%</div>
+              <div class="kpi-label">Tingkat Pemulihan (Recovery Rate)</div>
+              <div class="kpi-footer-note">Memenuhi Standar POJK 12/2024</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <div class="kpi-icon purple"><i class="fa-solid fa-clock"></i></div>
+                <span class="kpi-trend up-green">&lt; 4 Jam</span>
+              </div>
+              <div class="kpi-value font-mono">3.8 Jam</div>
+              <div class="kpi-label">Mean Time to Detect (MTTD)</div>
+              <div class="kpi-footer-note">Pencegahan Otomatis Real-Time</div>
+            </div>
+          </div>
+
+          <div class="grid-2col">
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-chart-line text-success"></i> Tren Pemulihan Kerugian Finansial Tambang (Loss Recovery)</h3>
+                  <p>Perbandingan total kasus terdeteksi vs dana yang berhasil di-hold.</p>
+                </div>
+              </div>
+              <div style="height: 280px;">
+                <canvas id="chart-exec-recovery"></canvas>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="content-card-header">
+                <div class="card-title-group">
+                  <h3><i class="fa-solid fa-fire text-danger"></i> Peta Risiko Site & Stockpile Tambang Batubara</h3>
+                  <p>Tingkat probabilitas anomali berdasarkan lokasi operasional.</p>
+                </div>
+              </div>
+              <div style="height: 280px;">
+                <canvas id="chart-exec-regional"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 8: INVESTIGATION WORKSPACE (DETAIL)
+             ========================================================================= -->
+        <section class="view-panel" id="view-investigation_detail">
+          
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-folder-open text-danger"></i> Digital Investigation Workspace (Dossier AL-2024-001)</h1>
+              <p>Ruang kerja investigasi mendalam perkara Double Transfer Jasa Hauling Batubara PT. MAS (Rp 980 Juta) & Rekening Siluman Bank Mandiri.</p>
+            </div>
+          </div>
+
+          <!-- Dossier Summary Card -->
+          <div class="dossier-header-card">
+            <div class="dossier-header-flex">
+              <div>
+                <span class="badge-score red" style="margin-bottom: 6px; display: inline-block;">CASE ID: AL-2024-001 • CRITICAL SEVERITY</span>
+                <h2 style="font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-top: 4px;">Indikasi Double Transfer Jasa Hauling Batubara PT. MAS (Rp 980 Juta) & Rekening Siluman</h2>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+                  Target: <strong>Rudi Hartono (Staff AP)</strong> & <strong>PT. MAS (Mitra Alam Sentosa)</strong> | Eksposur: <strong class="text-danger">Rp 980.000.000</strong>
+                </p>
+              </div>
+              <div class="dossier-header-actions">
+                <button class="btn btn-danger btn-sm" onclick="showToast('Surat Permintaan Klarifikasi Direksi Diterbitkan!')"><i class="fa-solid fa-gavel"></i> Terbitkan BAP</button>
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Mengekspor berkas digital dossier...')"><i class="fa-solid fa-file-pdf"></i> Ekspor PDF</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2-Column Investigation Workspace -->
+          <div class="grid-2col" style="margin-top: 20px;">
+            
+            <!-- Left Column: Graph & AI Analysis -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              
+              <!-- Interactive Multi-Hop SVG Graph -->
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-diagram-project text-danger"></i> Multi-Hop Money Flow Graph (Aliran Dana Kas Tambang)</h3>
+                    <p>Visualisasi interaktif relasi antara Kas Mandiri, Staf Internal, PT. MAS, dan Rekening Siluman.</p>
+                  </div>
+                </div>
+                <div class="graph-box" id="workspace-graph-container">
+                  <svg width="100%" height="100%" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <radialGradient id="nodeRed" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ef4444"/>
+                        <stop offset="100%" stop-color="#991b1b"/>
+                      </radialGradient>
+                      <radialGradient id="nodeBlue" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#3b82f6"/>
+                        <stop offset="100%" stop-color="#1e40af"/>
+                      </radialGradient>
+                      <radialGradient id="nodeOrange" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#f59e0b"/>
+                        <stop offset="100%" stop-color="#b45309"/>
+                      </radialGradient>
+                    </defs>
+
+                    <!-- Connections -->
+                    <line x1="300" y1="140" x2="130" y2="70" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
+                    <line x1="300" y1="140" x2="470" y2="70" stroke="#ef4444" stroke-width="3"/>
+                    <line x1="300" y1="140" x2="160" y2="240" stroke="#10b981" stroke-width="2"/>
+                    <line x1="300" y1="140" x2="440" y2="240" stroke="#ef4444" stroke-width="3"/>
+                    <line x1="470" y1="70" x2="440" y2="240" stroke="#ef4444" stroke-width="2" stroke-dasharray="3"/>
+
+                    <!-- Center Node: AL-2024-001 -->
+                    <circle cx="300" cy="140" r="28" fill="url(#nodeRed)"/>
+                    <text x="300" y="144" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">AL-001</text>
+
+                    <!-- Node: PT. MAS (Hauling Partner) -->
+                    <circle cx="130" cy="70" r="24" fill="url(#nodeBlue)"/>
+                    <text x="130" y="74" fill="#ffffff" font-size="8.5" font-weight="bold" text-anchor="middle">PT. MAS</text>
+                    <text x="130" y="104" fill="#94a3b8" font-size="8" text-anchor="middle">Hauling 2006 MT</text>
+
+                    <!-- Node: Rudi Hartono (Staff AP) -->
+                    <circle cx="470" cy="70" r="26" fill="url(#nodeRed)"/>
+                    <text x="470" y="74" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">Rudi H.</text>
+                    <text x="470" y="104" fill="#ef4444" font-size="8.5" font-weight="bold" text-anchor="middle">Input Double TF</text>
+
+                    <!-- Node: Rek Bank Mandiri Kas (1000001) -->
+                    <circle cx="160" cy="240" r="22" fill="#10b981"/>
+                    <text x="160" y="244" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">Mandiri</text>
+                    <text x="160" y="270" fill="#10b981" font-size="8" text-anchor="middle">Kas 1000001</text>
+
+                    <!-- Node: PT. AADC (Pinjaman Gantung) -->
+                    <circle cx="440" cy="240" r="26" fill="url(#nodeOrange)"/>
+                    <text x="440" y="244" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">PT. AADC</text>
+                    <text x="440" y="270" fill="#f59e0b" font-size="8" text-anchor="middle">Pinjaman 5 Miliar</text>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- AI Forensic Hypothesis -->
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-brain text-primary"></i> AI Forensic Hypothesis & Legal Risk Analysis</h3>
+                    <p>Analisis otomatis penalaran berbasis pola transaksi buku kas dummy.xlsx.</p>
+                  </div>
+                </div>
+                <div style="background-color: #f8fafc; border-left: 4px solid var(--danger); padding: 14px; border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.6; color: #334155;">
+                  <strong style="color: #b91c1c;">Hipotesis Forensik Utama:</strong><br>
+                  1. Pada 04 Jan 20x8, telah diterbitkan pembayaran resmi Jasa Transportir Hauling PT. MAS 2.006 MT sebesar Rp 980 Juta ke Rekening BCA Resmi.<br>
+                  2. Pada 05 Jan 20x8 Pkl 23:40 WIB (Off-Hours), user <strong>Rudi Hartono</strong> menginput ulang transaksi tersebut dengan Voucher 001/BIN/I/20x8 dengan nomor rekening tujuan dialihkan ke <strong>Bank Mandiri 142-009-8812</strong> (terdaftar atas nama keluarga staf).<br>
+                  3. Ditemukan pula pembayaran berulang kepada <strong>PT. Perkasa Kuat Sejahtera</strong> (perusahaan pribadi Direktur Utama) yang perlu diaudit khusus untuk kepatuhan benturan kepentingan.
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Timeline & Evidence -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+              
+              <!-- Timeline Card -->
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-timeline text-danger"></i> Kronologi Detik-demi-Detik Aliran Transaksi</h3>
+                    <p>Rekonstruksi forensik berdasarkan log audit ERP dan perbankan.</p>
+                  </div>
+                </div>
+                
+                <div class="timeline-container" style="padding: 10px 0;">
+                  <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--primary); margin-top: 4px;"></div>
+                    <div>
+                      <span class="font-mono" style="font-size: 0.72rem; color: #64748b;">04 Jan 20x8 • 16:30 WIB</span>
+                      <p style="font-size: 0.78rem; font-weight: 700; color: #0f172a; margin: 2px 0;">Penerbitan Invoice Resmi Jasa Hauling PT. MAS 2.006 MT</p>
+                      <p style="font-size: 0.72rem; color: #64748b;">Invoice 07/INT-JJJ/XII/2023 diinput ke sistem dengan rekening tujuan BCA Resmi.</p>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--danger); margin-top: 4px;"></div>
+                    <div>
+                      <span class="font-mono" style="font-size: 0.72rem; color: #ef4444; font-weight: 700;">05 Jan 20x8 • 23:40 WIB (Off-Hours)</span>
+                      <p style="font-size: 0.78rem; font-weight: 700; color: #b91c1c; margin: 2px 0;">Penggantian Rekening Bank Vendor ke Mandiri 142</p>
+                      <p style="font-size: 0.72rem; color: #64748b;">Rudi Hartono menginput Voucher 001/BIN/I/20x8 (Double TF) dari IP 192.168.1.45.</p>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 12px;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--success); margin-top: 4px;"></div>
+                    <div>
+                      <span class="font-mono" style="font-size: 0.72rem; color: #10b981; font-weight: 700;">05 Jan 20x8 • 23:42 WIB</span>
+                      <p style="font-size: 0.78rem; font-weight: 700; color: #047857; margin: 2px 0;">FDS Automatic Payment Hold Berhasil Mencegah Kerugian</p>
+                      <p style="font-size: 0.72rem; color: #64748b;">Sistem FDS mendeteksi duplikasi invoice dan memblokir pencairan kas sebesar Rp 980 Juta.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Evidence Vault in Dossier -->
+              <div class="content-card">
+                <div class="content-card-header">
+                  <div class="card-title-group">
+                    <h3><i class="fa-solid fa-file-shield text-danger"></i> Berkas Alat Bukti Terlampir (Chain of Custody)</h3>
+                    <p>Dokumen bukti digital yang telah terenkripsi dan terverifikasi.</p>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;" id="workspace-evidence-list">
+                  <div style="background-color: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <i class="fa-solid fa-file-shield text-danger" style="font-size: 1.2rem;"></i>
+                      <div>
+                        <strong style="font-size: 0.78rem;">Voucher_001_BIN_I_20x8_Double_TF_Rp980M.pdf</strong><br>
+                        <span style="font-size: 0.68rem; color: #64748b;">SHA-256: e3b0c44298fc1c149afbf4c8...</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-outline-danger btn-xs" onclick="showToast('Mengunduh berkas bukti digital...')"><i class="fa-solid fa-download"></i></button>
+                  </div>
+                  <div style="background-color: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <i class="fa-solid fa-file-shield text-danger" style="font-size: 1.2rem;"></i>
+                      <div>
+                        <strong style="font-size: 0.78rem;">Invoice_07_INT_JJJ_XII_2023_PT_MAS_Hauling.pdf</strong><br>
+                        <span style="font-size: 0.68rem; color: #64748b;">SHA-256: 8f434346648f6b96df89dda9...</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-outline-danger btn-xs" onclick="showToast('Mengunduh berkas bukti digital...')"><i class="fa-solid fa-download"></i></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 9: DIGITAL EVIDENCE VAULT (SHA-256)
+             ========================================================================= -->
+        <section class="view-panel" id="view-evidence_mgmt">
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-vault text-warning"></i> Digital Evidence Vault (Chain of Custody)</h1>
+              <p>Brankas penyimpanan dokumen bukti elektronik terenkripsi dengan jaminan integritas hash kriptografis SHA-256 untuk kesiapan penegakan hukum dan persidangan.</p>
+            </div>
+            <div class="module-banner-actions">
+              <button class="btn btn-primary btn-sm" onclick="openUploadEvidenceModal()"><i class="fa-solid fa-upload"></i> Unggah Bukti Digital</button>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <div class="content-card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-shield-check text-warning"></i> Daftar Berkas Bukti Digital Terenkripsi</h3>
+                <p>Seluruh dokumen transaksi tambang batubara dengan checksum anti-tamper.</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nama File Bukti</th>
+                    <th>Format & Kategori</th>
+                    <th>Sumber Asal Dokumen</th>
+                    <th>Case ID Terkait</th>
+                    <th>SHA-256 Checksum</th>
+                    <th>Waktu Unggah</th>
+                    <th>Uploader</th>
+                    <th class="text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-evidence-vault-body">
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-file-pdf text-danger" style="font-size: 1.1rem;"></i>
+                        <div><strong>Voucher_001_BIN_I_20x8_Double_TF_Rp980M.pdf</strong><br><span style="font-size: 0.7rem; color: #64748b;">PDF Scan • 2.4 MB</span></div>
+                      </div>
+                    </td>
+                    <td><span class="badge-tag blue">PDF Scan</span></td>
+                    <td>Bank Mandiri Statement (1000001)</td>
+                    <td class="font-mono font-bold text-danger">AL-2024-001</td>
+                    <td class="font-mono" style="font-size: 0.68rem; color: #475569; word-break: break-all;">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</td>
+                    <td class="font-mono">05 Jan 20x8 23:42</td>
+                    <td>FDS Bot Ingestion</td>
+                    <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Verifikasi Hash SHA-256 MATCH: 100% Asli')"><i class="fa-solid fa-shield-check text-success"></i> Verify</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- =========================================================================
+             MODULE 10: USER ACCESS & RBAC MATRIX
+             ========================================================================= -->
+        <section class="view-panel" id="view-user_access">
+          <div class="module-header-banner">
+            <div class="module-banner-info">
+              <h1><i class="fa-solid fa-user-shield text-info"></i> Tata Kelola Hak Akses Pengguna (RBAC Matrix)</h1>
+              <p>Pengelolaan akun pengguna internal ERP dan FDS, pemantauan status penonaktifan (suspension), dan pencatatan riwayat audit login.</p>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <div class="content-card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-users text-info"></i> Matriks Hak Akses Pengguna Sistem</h3>
+                <p>Status akun tim investigasi forensik dan staf operasional.</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nama Lengkap</th>
+                    <th>Email Korporasi</th>
+                    <th>Peran Sistem</th>
+                    <th>Divisi</th>
+                    <th>Status Akun</th>
+                    <th>Terakhir Login</th>
+                    <th class="text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="table-users-list-body">
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="user-avatar" style="background-color: var(--dark-sidebar); color: #fff;">BS</div>
+                        <div><strong>Budi Santoso, CFE</strong></div>
+                      </div>
+                    </td>
+                    <td class="font-mono">budi.santoso@perusahaan.co.id</td>
+                    <td><span class="badge-tag blue">Lead Fraud Investigator</span></td>
+                    <td>Internal Audit & Forensics</td>
+                    <td><span class="badge-tag green">Aktif</span></td>
+                    <td class="font-mono">Hari ini, 09:40 WIB</td>
+                    <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Kelola hak akses RBAC user')">Kelola Hak</button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="user-avatar" style="background-color: var(--dark-sidebar); color: #fff;">RH</div>
+                        <div><strong>Rudi Hartono</strong></div>
+                      </div>
+                    </td>
+                    <td class="font-mono">rudi.hartono@perusahaan.co.id</td>
+                    <td><span class="badge-tag red">AP Staff (Under Investigation)</span></td>
+                    <td>Finance & Accounting</td>
+                    <td><span class="badge-tag red font-bold">Suspended (Hold)</span></td>
+                    <td class="font-mono">05 Jan 20x8, 23:45 WIB</td>
+                    <td class="text-right"><button class="btn btn-secondary btn-xs" onclick="showToast('Kelola hak akses RBAC user')">Kelola Hak</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- MODAL: OCR INSPECTOR -->
+  <div class="modal-overlay" id="modal-ocr-inspector">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-microscope text-danger"></i>
+          <h3>AI OCR Image & Mathematical Forensics Inspector</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('modal-ocr-inspector')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="grid-2col">
+          <div>
+            <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;">Dokumen Invoice Asli</h4>
+            <div style="background-color: #f1f5f9; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; font-family: monospace; font-size: 0.78rem;">
+              <strong>INVOICE NO:</strong> 07/INT-JJJ/XII/2023<br>
+              <strong>VENDOR:</strong> PT. Mitra Alam Sentosa (PT. MAS)<br>
+              <strong>DESKRIPSI:</strong> Jasa Coal Hauling IPD Alam4 2.006,03 MT<br>
+              <strong>TOTAL:</strong> Rp 980.000.000<br>
+              <strong>BANK TUJUAN:</strong> Mandiri 142-00-98812-1
+            </div>
+          </div>
+          <div>
+            <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: #b91c1c;">Hasil Diagnostik Forensik ELA</h4>
+            <div style="background-color: #fef2f2; border: 1px solid #fca5a5; border-radius: var(--radius-sm); padding: 14px; font-size: 0.78rem; line-height: 1.5;">
+              <p><strong class="text-danger">1. Error Level Analysis (ELA): 98% Probabilitas Manipulasi</strong><br>Ditemukan artefak kompresi piksel berlebih pada blok teks nomor rekening bank.</p>
+              <p style="margin-top: 8px;"><strong class="text-danger">2. Mismatch Rekening Bank</strong><br>Rekening resmi PT. MAS di database adalah BCA 883-019-2811. Nomor rekening pada voucher diubah menjadi rekening pribadi keluarga staf AP.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-ocr-inspector')">Tutup</button>
+        <button class="btn btn-danger btn-sm" onclick="closeModal('modal-ocr-inspector'); openCaseDetail('AL-2024-001');">Buka Kasus Investigasi</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

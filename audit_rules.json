@@ -1,0 +1,58 @@
+[
+  {
+    "id": "RULE-01",
+    "title": "Benturan Kepentingan (Conflict of Interest) Direktur Utama",
+    "detail": "PT. Perkasa Kuat Sejahtera adalah perusahaan pribadi Direktur Utama. Wajib diawasi ketat dan di-highlight pada setiap voucher pembayaran royalti (Voucher 036, 037, 038/BOU).",
+    "severity": "CRITICAL",
+    "foundIn": "Voucher 036/BOU, 037/BOU, 038/BOU, 004/Kalibata"
+  },
+  {
+    "id": "RULE-02",
+    "title": "Transfer Kas di Luar Hari Kerja / Jam Kerja (Off-Hours & Weekend)",
+    "detail": "Deteksi transaksi transfer kas pada hari libur atau malam hari (22:00 - 04:00) yang tidak melalui prosedur operasional standar.",
+    "severity": "HIGH",
+    "foundIn": "Voucher 001/BIN (Double TF Pkl 23:40), 008/BIN (Pkl 01:15)"
+  },
+  {
+    "id": "RULE-03",
+    "title": "Pengawasan Kata Kunci 'Pinjaman Sementara' (Suspense Account 1199001)",
+    "detail": "Semua pengeluaran atau penerimaan berlabel pinjaman sementara tanpa BAP Direksi wajib di-flag dan ditelusuri pelunasannya.",
+    "severity": "HIGH",
+    "foundIn": "PT. AADC Rp 5.0 Miliar, Royalti Kalibata Rp 500 Juta, PT. PDI"
+  },
+  {
+    "id": "RULE-04",
+    "title": "Pengadaan Mesin & Aset Tetap > Rp 550 Juta Wajib Pembiayaan Syariah",
+    "detail": "Pengeluaran pembelian mesin di atas Rp 550 Juta wajib diverifikasi ke Asset Register dan uji fisik spesifikasi teknis di lapangan.",
+    "severity": "CRITICAL",
+    "foundIn": "Voucher 030/BOU (Mesin ABC Rp 1.554 Miliar - Temuan Audit: Underspek, Beda Merk)"
+  },
+  {
+    "id": "RULE-05",
+    "title": "Validasi Sumber Mutasi Bank (Haram Bukti Jurnal Umum, Wajib BIN/BOU)",
+    "detail": "Seluruh mutasi rekening kas/bank harus menggunakan bukti Bank In (BIN) atau Bank Out (BOU), bukan Bukti Jurnal (JV) umum.",
+    "severity": "MEDIUM",
+    "foundIn": "Rekening Bank Mandiri 1000001"
+  },
+  {
+    "id": "RULE-06",
+    "title": "Rekonsiliasi Gaji & BPJS HRD vs GL",
+    "detail": "Data gaji GL pada Voucher 035/BOU tercatat Rp 112 Juta vs Data Riil HRD = Rp 80 Juta (Selisih Gaji Fiktif Rp 32 Juta). BPJS HRD = 2.",
+    "severity": "HIGH",
+    "foundIn": "Voucher 035/BOU (Gaji Jan 2024)"
+  },
+  {
+    "id": "RULE-07",
+    "title": "Fisik Register Aset & Fraud Spesifikasi Mesin (Underspecification)",
+    "detail": "Audit fisik mesin nomor aset Abc 11 (Voucher 030/BOU Rp 1.554 M) menunjukkan mesin yang datang tidak sesuai spesifikasi kontrak (beda merk).",
+    "severity": "CRITICAL",
+    "foundIn": "Register Aset Baris 120-121 dummy.xlsx"
+  },
+  {
+    "id": "RULE-08",
+    "title": "Ekualisasi Restitusi PPh Badan Rp 4.9 Miliar (016/BOU)",
+    "detail": "Estimasi PPh Badan Overpaid Rp 5.0 Miliar vs Realisasi Penerimaan Kas Mandiri Rp 4.9 Miliar + 99 JV Rp 100 Juta.",
+    "severity": "MEDIUM",
+    "foundIn": "Voucher 016/BOU & Jurnal 99 JV"
+  }
+]
